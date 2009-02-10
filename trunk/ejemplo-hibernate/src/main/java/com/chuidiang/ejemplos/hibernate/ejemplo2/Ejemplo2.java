@@ -9,27 +9,24 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.chuidiang.ejemplos.hibernate.ejemplo1.Event;
-import com.chuidiang.ejemplos.hibernate.ejemplo1.HibernateUtil;
 
 public class Ejemplo2 {
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         BasicConfigurator.configure();
         Logger.getRootLogger().setLevel(Level.WARN);
         new Ejemplo2();
-//        Long idPerson = mgr.createAndStorePerson("Pedro", "Loco", 33);
-//        mgr.addPersonToEvent(idPerson, idEvent);
-//        mgr.modificaEventos();
         HibernateUtil.getSessionFactory().close();
     }
 
     public Ejemplo2() {
         Long idEvent = createAndStoreEvent("El Event", new Date());
-        List<Event> lista = listEvents();
+        Long idPerson = createAndStorePerson("Juan", "Cortés", 34);
+        addPersonToEvent(idPerson, idEvent);
+
+        listPersons();
     }
+
     private Long createAndStoreEvent(String title, Date theDate) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -40,52 +37,36 @@ public class Ejemplo2 {
         session.getTransaction().commit();
         return theEvent.getId();
     }
-    
-//    private Long createAndStorePerson (String nombre, String apellido, int edad) {
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//        Person p = new Person();
-//        p.setAge(edad);
-//        p.setFirstname(nombre);
-//        p.setLastname(apellido);
-//        session.save(p);
-//        session.getTransaction().commit();
-//        return p.getId();
-//    }
 
-//    private List<Person> modificaEventos() {
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//        List<Person> result = session.createQuery("from Person").list();
-//        for (Person persona: result) {
-//            Iterator iterador = persona.getEvents().iterator();
-//            while (iterador.hasNext()) {
-//                Event evento = (Event)iterador.next();
-//                evento.setTitle("Evento de "+persona.getFirstname());
-//            }
-//        }
-//        session.getTransaction().commit();
-//        return result;
-//    }
-    
-    private List<Event> listEvents() {
+    private Long createAndStorePerson(String nombre, String apellido, int edad) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List<Event> result = session.createQuery("from Event").list();
+        Person p = new Person();
+        p.setAge(edad);
+        p.setFirstname(nombre);
+        p.setLastname(apellido);
+        session.save(p);
         session.getTransaction().commit();
-        for (Event evento: result) {
-            System.out.println(evento);
+        return p.getId();
+    }
+
+    private List<Person> listPersons() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<Person> result = session.createQuery("from Person").list();
+        for (Person persona : result) {
+            System.out.println(persona);
         }
+        session.getTransaction().commit();
         return result;
     }
-    
-//    private void addPersonToEvent(Long personId, Long eventId) {
-//        Session session =
-//        HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//        Person aPerson = (Person) session.load(Person.class, personId);
-//        Event anEvent = (Event) session.load(Event.class, eventId);
-//        aPerson.getEvents().add(anEvent);
-//        session.getTransaction().commit();
-//    }
+
+    private void addPersonToEvent(Long personId, Long eventId) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Person aPerson = (Person) session.load(Person.class, personId);
+        Event anEvent = (Event) session.load(Event.class, eventId);
+        aPerson.getEvents().add(anEvent);
+        session.getTransaction().commit();
+    }
 }

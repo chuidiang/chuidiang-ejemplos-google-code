@@ -1,5 +1,7 @@
 package com.chuidiang.ejemplos.hibernate.ejemplo2;
 
+import java.io.File;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -8,8 +10,8 @@ public class HibernateUtil {
     static {
         try {
             // Create the SessionFactory from hibernate.cfg.xml
-            sessionFactory = new Configuration().configure()
-                    .buildSessionFactory();
+            sessionFactory = new Configuration().configure(
+                    new File("hibernate2.cfg.xml")).buildSessionFactory();
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
             System.err.println("Initial SessionFactory creation failed." + ex);
