@@ -6,7 +6,15 @@ import java.util.Set;
 
 import com.chuidiang.ejemplos.hibernate.ejemplo1.Event;
 
+/**
+ * Clase Person, persistente en base de datos en este ejemplo y con varios Event
+ * asociados.
+ * 
+ * @author Chuidiang
+ * 
+ */
 public class Person {
+    /** Clave primaria */
     private Long id;
     private int age;
     private String firstname;
@@ -29,6 +37,7 @@ public class Person {
         this.events = events;
     }
 
+    /** Metodo setter privado, hibernate puede llamarlo, pero nosotros no */
     private void setId(Long id) {
         this.id = id;
     }
@@ -64,7 +73,7 @@ public class Person {
         Iterator<Event> eventos = getEvents().iterator();
         while (eventos.hasNext())
             sb.append(System.getProperty("line.separator") + "   Evento : "
-                    + eventos.next());
+                    + eventos.next().toString());
         return sb.toString();
     }
 }
