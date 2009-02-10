@@ -13,7 +13,7 @@
 		<set name="events" table="PERSON_EVENT">
 			<key column="PERSON_ID" />
 			<many-to-many column="EVENT_ID"
-				class="com.chuidiang.ejemplos.hibernate.Event" />
+				class="com.chuidiang.ejemplos.hibernate.ejemplo1.Event" />
 		</set>
 	</class>
 </hibernate-mapping>
