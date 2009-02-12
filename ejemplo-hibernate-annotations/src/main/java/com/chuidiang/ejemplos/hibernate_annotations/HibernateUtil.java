@@ -10,8 +10,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 /**
  * Clase de utilidad para obtener la sesion de hibernate.
  * 
- * @author Chuidiang
- * 
+ * @author documentacion hibernate
  */
 public class HibernateUtil {
 
