@@ -61,14 +61,17 @@ public class Ejemplo1 {
     }
 
     private Long insertFlight() {
+        // Se obtiene la sesion
         Session s = HibernateUtil.getSession();
         s.beginTransaction();
 
+        // Se instancia la clase Flight y se rellenan sus datos
         Flight f = new Flight();
         f.setFirstname("Nombre vuelo");
         f.setFecha(new Date());
-        s.save(f);
 
+        // Se salva en base de datos
+        s.save(f);
         s.getTransaction().commit();
 
         return f.getId();
