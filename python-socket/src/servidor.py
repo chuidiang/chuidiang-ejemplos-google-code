@@ -23,26 +23,26 @@ if __name__ == '__main__':
    while 1:
        
       # Se espera a un cliente
-      add, cliente = server.accept()
+      socket_cliente, datos_cliente = server.accept()
       
       # Se escribe su informacion
-      print "conectado "+str(cliente)
+      print "conectado "+str(datos_cliente)
       
       # Bucle indefinido hasta que el cliente envie "adios"
       seguir = True
       while seguir:
          # Espera por datos
-         peticion = add.recv(1000)
+         peticion = socket_cliente.recv(1000)
          
          # Contestacion a "hola"
          if ("hola"==peticion):
-             print str(cliente)+ "envia hola: contesto"
-             add.send("pues hola")
+             print str(datos_cliente)+ " envia hola: contesto"
+             socket_cliente.send("pues hola")
              
          # Contestacion y cierre a "adios"
          if ("adios"==peticion):
-             print str(cliente)+ "envia adios: contesto y desconecto"
-             add.send("pues adios")
-             add.close()
-             print "desconectado "+str(cliente)
+             print str(datos_cliente)+ " envia adios: contesto y desconecto"
+             socket_cliente.send("pues adios")
+             socket_cliente.close()
+             print "desconectado "+str(datos_cliente)
              seguir = False
