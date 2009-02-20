@@ -1,5 +1,5 @@
 #labels Featured
-#Ejemplos
+=Listado de ejemplos=
 
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate java e hibernate-core]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate-annotations java e hibernate-annotations]
