@@ -9,7 +9,7 @@ el principal, contando simultaneamente.
 import thread
 import time
 
-# Numero de hilos que han terminado
+# Indica si ha terminado el hilo
 hilo_terminado = False
 
 # Funcion que se ejecuta en un hilo
