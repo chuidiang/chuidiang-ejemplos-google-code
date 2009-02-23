@@ -4,5 +4,5 @@
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate java e hibernate-core]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate-annotations java e hibernate-annotations]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-gmail python y gmail]
- * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-socket python y sockets]
- * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-hilos python e hilos]
+ * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-socket/src python y sockets]
+ * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-hilos/src python e hilos]
