@@ -2,9 +2,10 @@
 Created on 20/02/2009
 @author: Chuidiang
 
-Ejemplo de un hilo con bloqueo. El main crea un lock y lo adquiere.
-Luego lanza un hilo, que se quedara a la espera del lock. El main,
-un tiempo despues, liberara el lock.
+Ejemplo de un hilo con bloqueo.
+Un main lanza un hilo y un lock sirve para hacer que el hilo espere
+el permiso del main para continuar y para que el main espere que el hilo
+termine antes de terminar el programa
 '''
 
 import thread
@@ -38,7 +39,9 @@ if __name__ == '__main__':
     #Liberamos el bloqueo
     print "Principal: Libero bloqueo"
     bloqueo.release()
-    # Espera a que termine el hilo
-    while (not hilo_terminado):
-        pass
+    # Espera a que termine el hilo, esperando la liberacion
+    # del bloqueo
+    bloqueo.acquire()
+    bloqueo.release()
+    print "Fin de programa"
     
