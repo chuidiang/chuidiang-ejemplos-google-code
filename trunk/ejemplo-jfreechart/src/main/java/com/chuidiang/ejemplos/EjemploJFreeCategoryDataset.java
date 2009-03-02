@@ -58,11 +58,14 @@ public class EjemploJFreeCategoryDataset {
         dataset.setValue(63, SITIO_2, "Jueves");
         dataset.setValue(66, SITIO_2, "Viernes");
 
+        // Salvamos en fichero todos los posibles tipos de graficos
         JFreeChart chart = null;
         for (TiposDeGrafico i : TiposDeGrafico.values()) {
             chart = createChart(dataset, i);
             salvaGraficoEnFichero(chart, i);
         }
+
+        // Hacemos y mostramos una ventana con el último de ellos
         ChartPanel panel = new ChartPanel(chart);
 
         JFrame ventana = new JFrame("El grafico");
