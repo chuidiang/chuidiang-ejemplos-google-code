@@ -1,6 +1,7 @@
 #labels Featured
 =Listado de ejemplos=
 
+ * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplos-java-mysql java y mysql]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate java e hibernate-core]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate-annotations java e hibernate-annotations]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/trunk/ejemplo-jfreechart/ java y JFreeChart]
