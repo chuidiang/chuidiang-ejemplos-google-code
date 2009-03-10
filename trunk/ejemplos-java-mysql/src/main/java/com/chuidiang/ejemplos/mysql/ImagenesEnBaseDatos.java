@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -27,10 +26,15 @@ public class ImagenesEnBaseDatos {
     /** Conexion con la base de datos */
     private Connection conexion = null;
 
+    /**
+     * Establece conexion con la base de datos, inserta una imagen, le lee y la
+     * escribe en un fichero.
+     */
     public ImagenesEnBaseDatos() {
-        estableceConexion();
+        conexion = Conexion.getConection();
         insertaImagen();
         leeImagen();
+        Conexion.cierraConexion(conexion);
     }
 
     /**
@@ -108,23 +112,6 @@ public class ImagenesEnBaseDatos {
             st.execute();
             is.close();
             st.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Establece la conexion en la base de datos, suponiendo que es mysql, esta
-     * en localhost, tiene una base de datos "hibernate", con usuario
-     * "hibernate" y password "hibernate".<br>
-     * Deja la conexión abierta en el atributo privado conexion.
-     */
-    private void estableceConexion() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/hibernate", "hibernate",
-                    "hibernate");
         } catch (Exception e) {
             e.printStackTrace();
         }
