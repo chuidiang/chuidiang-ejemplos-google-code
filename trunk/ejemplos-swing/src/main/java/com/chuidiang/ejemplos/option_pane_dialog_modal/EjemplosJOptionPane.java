@@ -162,6 +162,12 @@ public class EjemplosJOptionPane {
         textField.setText(dialogoModal.getText());
     }
 
+    /**
+     * Muestra un input dialog y muestra el texto recogido de el en el
+     * jtextfield
+     * 
+     * @param evento
+     */
     protected void muestraInputDialog(ActionEvent evento) {
         String seleccion = JOptionPane.showInputDialog((Component) evento
                 .getSource(), "Input dialog", JOptionPane.INFORMATION_MESSAGE);
@@ -169,6 +175,12 @@ public class EjemplosJOptionPane {
 
     }
 
+    /**
+     * Muestra un option dialog con varios botones de opciones. Muestra en el
+     * jtextfield la opcion elegida.
+     * 
+     * @param evento
+     */
     protected void muestraOptionDialog(ActionEvent evento) {
         int seleccion = JOptionPane.showOptionDialog((Component) evento
                 .getSource(), "Seleccione opcion", "Selector de opciones",
@@ -178,6 +190,12 @@ public class EjemplosJOptionPane {
         textField.setText("seleccionada opcion " + (seleccion + 1));
     }
 
+    /**
+     * Muestra un dialog de confirmacion, mostrando en el jtextfield si se ha
+     * confirmado o no.
+     * 
+     * @param evento
+     */
     protected void muestraConfrimDialog(ActionEvent evento) {
         int confirmado = JOptionPane.showConfirmDialog((Component) evento
                 .getSource(), "¿Lo confirmas?");
@@ -187,6 +205,12 @@ public class EjemplosJOptionPane {
             textField.setText("NO");
     }
 
+    /**
+     * Muestra un mensaje, avisando cuando el usuario cierra la ventana de
+     * mensaje
+     * 
+     * @param evento
+     */
     protected void muestraMessageDialog(ActionEvent evento) {
         JOptionPane.showMessageDialog((Component) evento.getSource(),
                 "Un aviso puñetero");
