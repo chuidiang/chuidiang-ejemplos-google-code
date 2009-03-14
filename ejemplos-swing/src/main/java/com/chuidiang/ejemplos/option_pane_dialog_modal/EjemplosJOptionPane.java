@@ -95,7 +95,7 @@ public class EjemplosJOptionPane {
 
             @Override
             public void actionPerformed(ActionEvent evento) {
-                muestraConfrimDialog(evento);
+                muestraConfirmDialog(evento);
 
             }
         });
@@ -170,7 +170,7 @@ public class EjemplosJOptionPane {
      */
     protected void muestraInputDialog(ActionEvent evento) {
         String seleccion = JOptionPane.showInputDialog((Component) evento
-                .getSource(), "Input dialog", JOptionPane.INFORMATION_MESSAGE);
+                .getSource(), "Input dialog", JOptionPane.QUESTION_MESSAGE);
         textField.setText(seleccion);
 
     }
@@ -182,12 +182,11 @@ public class EjemplosJOptionPane {
      * @param evento
      */
     protected void muestraOptionDialog(ActionEvent evento) {
-        int seleccion = JOptionPane.showOptionDialog((Component) evento
+        Object seleccion = JOptionPane.showInputDialog((Component) evento
                 .getSource(), "Seleccione opcion", "Selector de opciones",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, new Object[] { "opcion 1", "opcion 2", "opcion 3" },
-                "opcion 1");
-        textField.setText("seleccionada opcion " + (seleccion + 1));
+                JOptionPane.QUESTION_MESSAGE, null, new Object[] { "opcion 1",
+                        "opcion 2", "opcion 3" }, "opcion 1");
+        textField.setText("seleccionada opcion " + seleccion);
     }
 
     /**
@@ -196,7 +195,7 @@ public class EjemplosJOptionPane {
      * 
      * @param evento
      */
-    protected void muestraConfrimDialog(ActionEvent evento) {
+    protected void muestraConfirmDialog(ActionEvent evento) {
         int confirmado = JOptionPane.showConfirmDialog((Component) evento
                 .getSource(), "¿Lo confirmas?");
         if (JOptionPane.OK_OPTION == confirmado)
