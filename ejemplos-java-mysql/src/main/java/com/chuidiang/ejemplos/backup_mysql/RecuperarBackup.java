@@ -25,10 +25,9 @@ public class RecuperarBackup {
      * con mysqldump.
      */
     public RecuperarBackup() {
-        Process p;
         try {
             // Ejecucion del cliente mysql
-            p = Runtime
+            Process p = Runtime
                     .getRuntime()
                     .exec(
                             "c:/aplicaciones/wamp/mysql/bin/mysql -u hibernate -phibernate hibernate");
