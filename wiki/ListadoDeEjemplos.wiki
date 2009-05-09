@@ -7,6 +7,8 @@
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-hibernate-annotations java e hibernate-annotations]
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/trunk/ejemplo-jfreechart/ java y JFreeChart]
  * Ejemplo [http://code.google.com/p/chuidiang-ejemplos/wiki/ListadoDeEjemplos Patrón Modelo-Vista-Presenter MVP]
+ * Ejemplo con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/tags/ejemplo-junit-3.8.1/src/test/java/com/chuidiang/ejemplos/junit38 JUnit 3.8.1]
+ * Ejemplo con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-junit/src/test/java/com/chuidiang/ejemplos/junit45 JUnit 4.5]
 
 ==Python==
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-gmail python y gmail]
