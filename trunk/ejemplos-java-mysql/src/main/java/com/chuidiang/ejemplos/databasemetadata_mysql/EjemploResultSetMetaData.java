@@ -61,7 +61,7 @@ public class EjemploResultSetMetaData {
             int numeroColumnas = rsmd.getColumnCount();
 
             for (int i = 1; i <= numeroColumnas; i++) {
-                System.out.println("catalogo=" + rsmd.getCatalogName(i) + "."
+                System.out.println("columna=" + rsmd.getTableName(i) + "."
                         + rsmd.getColumnName(i) + " --> "
                         + rsmd.getColumnTypeName(i));
             }
