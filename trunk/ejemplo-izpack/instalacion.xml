@@ -1,0 +1,36 @@
+<installation version="1.0">
+   <info>
+      <appname>Chuidiang prueba izpack</appname>
+      <appversion>1.0</appversion>
+      <url>http:www.chuidiang.com</url>
+      <authors>
+         <author name="chuidiang" email="chuidiang@chuidiang.com"/>
+      </authors>
+      
+   </info>
+   <guiprefs resizable="yes" width="800" height="600"/>
+   <locale>
+      <langpack iso3="spa"/>
+   </locale>
+   <panels>
+      <panel classname="HelloPanel"/>
+      <panel classname="PacksPanel"/>
+      <panel classname="TargetPanel"/>
+      <panel classname="InstallPanel"/>
+      <panel classname="FinishPanel"/>
+   </panels>
+
+   <packs>
+      <pack name="ejecutables" required="yes">
+         <description>El ejecutable y sus ficheros</description>
+         <file src="APLICACION/bin" targetdir="$INSTALL_PATH/bin"/>
+         <file src="APLICACION/conf" targetdir="$INSTALL_PATH/conf"/>
+         <file src="APLICACION/images" targetdir="$INSTALL_PATH/images"/>
+      </pack>
+
+      <pack name="documentacion" required="no">
+         <description>La documentacion</description>
+         <file src="APLICACION/doc" targetdir="$INSTALL_PATH/doc"/>
+      </pack>
+   </packs>
+</installation>
