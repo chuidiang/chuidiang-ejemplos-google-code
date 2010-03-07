@@ -1,0 +1,29 @@
+<installation version="1.0">
+   <info>
+      <appname>maven-izapck</appname>
+      <appversion>1.0</appversion>
+      <url>http://www.chuidiang.com</url>
+      <authors>
+         <author name="chuidiang" email="chuidiang@chuidiang.com"/>
+      </authors>
+   </info>
+
+   <guiprefs resizable="yes" width="800" height="600"/>
+   <locale>
+      <langpack iso3="spa"/>
+   </locale>
+   <panels>
+      <panel classname="HelloPanel"/>
+      <panel classname="TargetPanel"/>
+      <panel classname="InstallPanel"/>
+      <panel classname="FinishPanel"/>
+   </panels>
+
+   <packs>
+      <pack name="ejecutables" required="yes">
+         <description>El ejecutable y sus ficheros</description>
+	 <file src="maven-izpack-1.0-SNAPSHOT.jar" targetdir="$INSTALL_PATH/bin"/>
+	 <fileset dir="dependency" targetdir="$INSTALL_PATH/bin" excludes="izpack-standalone-compiler-4.2.1.jar"/>
+      </pack>
+   </packs>
+</installation>
