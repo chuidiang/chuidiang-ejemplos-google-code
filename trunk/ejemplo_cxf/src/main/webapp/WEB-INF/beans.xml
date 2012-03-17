@@ -11,8 +11,8 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
 	<jaxws:endpoint 
-	  id="helloWorld" 
-	  implementor="com.chuidiang.ejemplos.cxf.HelloWorldImpl" 
-	  address="/HelloWorld" />
+	  id="calculadora" 
+	  implementor="com.chuidiang.ejemplos.cxf.CalculadoraImpl" 
+	  address="/Calculadora" />
 	  
 </beans>
