@@ -9,8 +9,8 @@
  * Ejemplo [http://code.google.com/p/chuidiang-ejemplos/wiki/ListadoDeEjemplos Patrón Modelo-Vista-Presenter MVP]
  * Ejemplo con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/tags/ejemplo-junit-3.8.1/src/test/java/com/chuidiang/ejemplos/junit38 JUnit 3.8.1]
  * Ejemplo con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-junit/src/test/java/com/chuidiang/ejemplos/junit45 JUnit 4.5]
-
  * Hacer instaladores con [http://www.chuidiang.com/chuwiki/index.php?title=Categor%C3%ADa:IzPack IzPack]
+ * Ejemplos de Web Services con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn%2Fbranches%2Fejemplo_cxf Apache CXF sobre Tomcat]
 
 ==Python==
  * Ejemplos con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/python-gmail python y gmail]
