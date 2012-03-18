@@ -2,33 +2,52 @@ package com.chuidiang.ejemplos.cxf;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.Holder;
 import javax.xml.ws.Service;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import org.apache.cxf.binding.soap.saaj.SAAJOutInterceptor;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
-import org.apache.ws.security.WSConstants;
-import org.apache.ws.security.handler.WSHandlerConstants;
+import org.apache.cxf.ws.addressing.AddressingBuilder;
+import org.apache.cxf.ws.addressing.AddressingProperties;
+import org.apache.cxf.ws.addressing.AttributedURIType;
+import org.apache.cxf.ws.addressing.EndpointReferenceType;
+import org.apache.cxf.ws.addressing.JAXWSAConstants;
+import org.apache.cxf.ws.addressing.MAPAggregator;
+import org.apache.cxf.ws.addressing.ObjectFactory;
+import org.apache.cxf.ws.addressing.WSAddressingFeature;
+import org.apache.cxf.ws.addressing.soap.MAPCodec;
 
 public class ClienteCalculadora {
+
    public static void main(String[] args) throws MalformedURLException {
+
       Calculadora calculadora = creaClienteWebService();
 
-      ponWSSecurity(calculadora);
+      Client client = ClientProxy.getClient(calculadora);
+      Endpoint endPoint = client.getEndpoint();
+      endPoint.getActiveFeatures().add(new WSAddressingFeature());
+
+      ponWSAddresing(calculadora);
+
       ponSOAPenLog(calculadora);
 
       try {
-         System.out.println(calculadora.suma(11.2, 33.4));
-         System.out.println(calculadora.resta(11.2, 33.4));
+         Map<String, Object> requestContext = ((BindingProvider) calculadora)
+               .getRequestContext();
+         requestContext.put(JAXWSAConstants.CLIENT_ADDRESSING_PROPERTIES,
+               getParametricaWSAddressing());
+
+         Holder<Double> holder = new Holder<Double>();
+         holder.value = 11.2;
+         calculadora.suma(holder, 33.4);
       } catch (SOAPFaultException e) {
          System.out.println("la has cagao " + e);
       }
@@ -42,7 +61,15 @@ public class ClienteCalculadora {
             "CalculadoraImplService");
       Service service = Service.create(wsdlURL, SERVICE_NAME);
       Calculadora calculadora = service.getPort(Calculadora.class);
+
       return calculadora;
+   }
+
+   private static void ponWSAddresing(Calculadora calculadora) {
+      Client client = ClientProxy.getClient(calculadora);
+      client.getBus().getFeatures().add(new WSAddressingFeature());
+      client.getOutInterceptors().add(new MAPAggregator());
+      client.getOutInterceptors().add(new MAPCodec());
    }
 
    private static void ponSOAPenLog(Calculadora calculadora) {
@@ -55,25 +82,27 @@ public class ClienteCalculadora {
       client.getOutInterceptors().add(logOut);
    }
 
-   private static void ponWSSecurity(Calculadora calculadora) {
-      Map<String, Object> outProps = new HashMap<String, Object>();
-      outProps
-            .put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
-      // Specify our username
-      outProps.put(WSHandlerConstants.USER, "joe");
-      // Password type : plain text
-      outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
-      // for hashed password use:
-      // properties.put(WSHandlerConstants.PASSWORD_TYPE,
-      // WSConstants.PW_DIGEST);
-      // Callback used to retrieve password for given user.
-      outProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
-            ClientPasswordHandler.class.getName());
+   private static AddressingProperties getParametricaWSAddressing() {
+      // get Message Addressing Properties instance
+      AddressingBuilder builder = AddressingBuilder.getAddressingBuilder();
+      AddressingProperties maps = builder.newAddressingProperties();
 
-      Client client = ClientProxy.getClient(calculadora);
-      Endpoint endPoint = client.getEndpoint();
-      WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(outProps);
-      endPoint.getOutInterceptors().add(wssOut);
-      endPoint.getOutInterceptors().add(new SAAJOutInterceptor());
+      // set MessageID property
+      AttributedURIType messageID = WSA_OBJECT_FACTORY
+            .createAttributedURIType();
+      messageID.setValue("urn:uuid:" + System.currentTimeMillis());
+      maps.setMessageID(messageID);
+
+      AttributedURIType replyTo = WSA_OBJECT_FACTORY.createAttributedURIType();
+      replyTo.setValue("http://localhost:8080/ejemplo_cxf/Resultado");
+      EndpointReferenceType eprt = WSA_OBJECT_FACTORY
+            .createEndpointReferenceType();
+      eprt.setAddress(replyTo);
+      maps.setReplyTo(eprt);
+
+      return maps;
    }
+
+   private static final ObjectFactory WSA_OBJECT_FACTORY = new ObjectFactory();
+
 }

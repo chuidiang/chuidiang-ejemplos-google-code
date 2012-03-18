@@ -9,26 +9,32 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-    <bean id="myPasswordCallback" class="com.chuidiang.ejemplos.cxf.MyPasswordCallback"/>
-    
+	<jaxws:endpoint id="resultado"
+		implementor="com.chuidiang.ejemplos.cxf.Resultado" address="/Resultado">
+		      <jaxws:features>
+            <wsa:addressing xmlns:wsa="http://cxf.apache.org/ws/addressing" />
+        </jaxws:features>
+		
+	</jaxws:endpoint>
+		
 	<jaxws:endpoint id="calculadora"
 		implementor="com.chuidiang.ejemplos.cxf.CalculadoraImpl" address="/Calculadora">
 		<jaxws:inInterceptors>
-			<!-- SAAJ Interceptor needs to be explicitly declared only in CXF 2.0.x -->
-			<bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
-			<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
-				<constructor-arg>
-					<map>
-						<entry key="action" value="UsernameToken" />
-						<entry key="passwordType" value="PasswordText" />
-						<entry key="signaturePropFile" value="..." />
-						<entry key="passwordCallbackRef">
-							<ref bean="myPasswordCallback" />
-						</entry>
-					</map>
-				</constructor-arg>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor">
+				<property name="prettyLogging" value="true" />
 			</bean>
 		</jaxws:inInterceptors>
+		
+		<jaxws:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor">
+				<property name="prettyLogging" value="true" />
+			</bean>
+		</jaxws:outInterceptors>
+		
+		<jaxws:features>
+			<wsa:addressing xmlns:wsa="http://cxf.apache.org/ws/addressing" />
+		</jaxws:features>
+		
 	</jaxws:endpoint>
 
 </beans>
