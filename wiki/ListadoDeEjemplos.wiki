@@ -10,7 +10,12 @@
  * Ejemplo con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/tags/ejemplo-junit-3.8.1/src/test/java/com/chuidiang/ejemplos/junit38 JUnit 3.8.1]
  * Ejemplo con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn/trunk/ejemplo-junit/src/test/java/com/chuidiang/ejemplos/junit45 JUnit 4.5]
  * Hacer instaladores con [http://www.chuidiang.com/chuwiki/index.php?title=Categor%C3%ADa:IzPack IzPack]
+
+===Web Services CXF===
+ * [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn%2Fbranches%2Fejemplo_cxf%2Fbasico-con-main Ejemplo CXF con main]
  * Ejemplos de Web Services con [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn%2Fbranches%2Fejemplo_cxf Apache CXF sobre Tomcat]
+ * [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn%2Fbranches%2Fejemplo_cxf%2Fws-addressing-sobre-tomcat WS-Addressing con Tomcat]
+ * [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn%2Fbranches%2Fejemplo_cxf%2Fws_security_sobre_tomcat WS-Security con Tomcat]
 
 ==Android==
  * El famoso [http://code.google.com/p/chuidiang-ejemplos/source/browse/#svn%2Fbranches%2Fejemplos-android%2Fhola-mundo Hola Mundo]
