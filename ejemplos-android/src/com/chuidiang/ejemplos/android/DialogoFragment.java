@@ -1,7 +1,7 @@
 package com.chuidiang.ejemplos.android;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class FormularioFragment extends Fragment {
+public class DialogoFragment extends DialogFragment {
 
    @Override
    public void onAttach(Activity activity) {
@@ -41,6 +41,7 @@ public class FormularioFragment extends Fragment {
                   pulsadoBoton(v);
                }
             });
+      getDialog().setTitle("Título del diálogo");
 
       return vista;
    }
@@ -55,7 +56,7 @@ public class FormularioFragment extends Fragment {
       }
       if (((Button) v).getText().equals("Ok")) {
          listener.pulsado(OK,
-               ((EditText) getActivity().findViewById(R.id.textoForumulario))
+               ((EditText) getDialog().findViewById(R.id.textoForumulario))
                      .getText().toString());
       } else {
          listener.pulsado(CANCEL, "");

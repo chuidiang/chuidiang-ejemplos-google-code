@@ -1,6 +1,7 @@
 package com.chuidiang.ejemplos.android;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.chuidiang.ejemplos.android.FormularioFragment.FormularioListener;
+import com.chuidiang.ejemplos.android.DialogoFragment.FormularioListener;
 
 public class AndroidHolaMundoActivity extends Activity implements
       FormularioListener {
@@ -26,13 +27,12 @@ public class AndroidHolaMundoActivity extends Activity implements
          @Override
          public void onClick(View v) {
             FragmentManager fm = getFragmentManager();
-            Fragment editor = fm.findFragmentByTag("editor");
+            DialogFragment editor = (DialogFragment) fm
+                  .findFragmentByTag("editor");
             if (null == editor) {
-               FragmentTransaction ft = fm.beginTransaction();
-               ft.add(R.id.contendorFormulario, new FormularioFragment(),
-                     "editor");
-               ft.commit();
+               editor = new DialogoFragment();
             }
+            editor.show(fm, "editor");
          }
       });
    }
@@ -40,7 +40,7 @@ public class AndroidHolaMundoActivity extends Activity implements
    @Override
    public void pulsado(int resultado, String texto) {
       TextView tv = (TextView) findViewById(R.id.textView);
-      if (resultado == FormularioFragment.OK) {
+      if (resultado == DialogoFragment.OK) {
          tv.setText(texto);
       }
       FragmentManager fm = getFragmentManager();
