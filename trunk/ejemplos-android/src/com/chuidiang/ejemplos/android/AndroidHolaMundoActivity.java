@@ -1,14 +1,19 @@
 package com.chuidiang.ejemplos.android;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class AndroidHolaMundoActivity extends Activity {
+import com.chuidiang.ejemplos.android.FormularioFragment.FormularioListener;
+
+public class AndroidHolaMundoActivity extends Activity implements
+      FormularioListener {
    /** Called when the activity is first created. */
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -20,26 +25,28 @@ public class AndroidHolaMundoActivity extends Activity {
 
          @Override
          public void onClick(View v) {
-            Intent intent = new Intent(AndroidHolaMundoActivity.this,
-                  CalculadoraActivity.class);
-            startActivityForResult(intent, 11);
-
+            FragmentManager fm = getFragmentManager();
+            Fragment editor = fm.findFragmentByTag("editor");
+            if (null == editor) {
+               FragmentTransaction ft = fm.beginTransaction();
+               ft.add(R.id.contendorFormulario, new FormularioFragment(),
+                     "editor");
+               ft.commit();
+            }
          }
       });
    }
 
    @Override
-   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-      super.onActivityResult(requestCode, resultCode, data);
+   public void pulsado(int resultado, String texto) {
       TextView tv = (TextView) findViewById(R.id.textView);
-
-      if ((resultCode == RESULT_OK) && (requestCode == 11)) {
-         tv.setText(data.getExtras().getCharSequence("DATO"));
-      } else {
-         if (resultCode != RESULT_OK)
-            tv.setText("No es ResultOK");
-         else
-            tv.setText("No es 11");
+      if (resultado == FormularioFragment.OK) {
+         tv.setText(texto);
       }
+      FragmentManager fm = getFragmentManager();
+      Fragment editor = fm.findFragmentByTag("editor");
+      FragmentTransaction ft = fm.beginTransaction();
+      ft.remove(editor);
+      ft.commit();
    }
 }
