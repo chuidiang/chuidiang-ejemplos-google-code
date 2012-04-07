@@ -14,19 +14,12 @@
         android:id="@+id/buton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pulsame" >
-    </Button>
-
-    <FrameLayout
-        android:id="@+id/contendorFormulario"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent" />
+        android:text="Pulsame" />
     
-    <!--
-    <fragment
-        class="com.chuidiang.ejemplos.android.FormularioFragment" 
-        android:id="@+id/formulario"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"/>    -->
+    
+    <ListFragment
+        android:id="@+id/buton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"  />
 
 </LinearLayout>
