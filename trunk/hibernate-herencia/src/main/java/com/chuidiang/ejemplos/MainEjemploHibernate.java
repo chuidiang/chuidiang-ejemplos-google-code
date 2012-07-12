@@ -13,10 +13,10 @@ public class MainEjemploHibernate {
 
     private static void consultaDatos() {
         Session s = HibernateUtil.getSessionFactory().openSession();
-        List<Dato> datos = s.createQuery("from Dato").list();
-        for (Dato dato : datos) {
+        List<Padre> datos = s.createQuery("from Padre").list();
+        for (Padre dato : datos) {
             System.out.println(dato.getId());
-            System.out.println(dato.getTitle());
+            System.out.println(dato.getAtributoPadre());
             System.out.println(dato.getDate());
             System.out.println(dato.diQuienEres());
         }
@@ -26,15 +26,15 @@ public class MainEjemploHibernate {
     private static void insertaAlgunDato() {
         Session s = HibernateUtil.getSessionFactory().openSession();
         try {
-            Hijo1 d1 = new Hijo1();
+            Hija1 d1 = new Hija1();
             d1.setDate(new Date());
-            d1.setTitle("titulo");
-            d1.setNumero(22);
+            d1.setAtributoPadre("titulo");
+            d1.setAtributoHija1(22);
             
-            Hijo2 d2 = new Hijo2();
+            Hija2 d2 = new Hija2();
             d2.setDate(new Date());
-            d2.setTitle("otro titulo");
-            d2.setBooleano(true);
+            d2.setAtributoPadre("otro titulo");
+            d2.setAtributoHija2(true);
             
             s.beginTransaction();
             s.save(d1);

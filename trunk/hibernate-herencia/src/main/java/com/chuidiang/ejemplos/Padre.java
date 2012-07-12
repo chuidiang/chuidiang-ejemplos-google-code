@@ -3,7 +3,7 @@ package com.chuidiang.ejemplos;
 import java.util.Date;
 
 
-public abstract class Dato {
+public abstract class Padre {
 	public long getId() {
         return id;
     }
@@ -16,17 +16,17 @@ public abstract class Dato {
     public void setDate(Date date) {
         this.date = date;
     }
-    public String getTitle() {
-        return title;
+    public String getAtributoPadre() {
+        return atributoPadre;
     }
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAtributoPadre(String atributoPadre) {
+        this.atributoPadre = atributoPadre;
     }
     
     private long id;
     
 	private Date date;
-	private String title;
+	private String atributoPadre;
 	
 	public abstract String diQuienEres();
 }
