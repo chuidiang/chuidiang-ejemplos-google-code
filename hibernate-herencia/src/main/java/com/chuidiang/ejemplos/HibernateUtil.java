@@ -1,4 +1,4 @@
-package com.chuidiang.ejemplos.tabla_por_subclase;
+package com.chuidiang.ejemplos;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

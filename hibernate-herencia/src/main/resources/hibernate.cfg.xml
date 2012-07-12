@@ -19,7 +19,11 @@
 		<property name="hibernate.connection.password"></property>
 
 		<property name="hibernate.hbm2ddl.auto">create</property>
-		<mapping resource="com/chuidiang/ejemplos/tabla_por_subclase/Padre.hbm.xml" />
+		
+		<!-- Descomenta solo uno de los tipos de mapeo, el que quieras probar -->
+		<!-- mapping resource="com/chuidiang/ejemplos/tabla_por_subclase/Padre.hbm.xml" /-->
+		<!-- mapping resource="com/chuidiang/ejemplos/tabla_por_jerarquia/Padre.hbm.xml" /-->
+		<mapping resource="com/chuidiang/ejemplos/tabla_por_subclase_concreta/Padre.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
 
