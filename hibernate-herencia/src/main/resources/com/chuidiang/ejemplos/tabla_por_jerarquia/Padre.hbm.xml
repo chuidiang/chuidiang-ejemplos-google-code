@@ -3,7 +3,7 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.chuidiang.ejemplos.tabla_por_subclase.Padre"
+	<class name="com.chuidiang.ejemplos.Padre"
 		discriminator-value="Padre">
 		<id name="id">
 			<generator class="native"></generator>
@@ -11,12 +11,12 @@
 		<discriminator column="clase" type="string" />
 		<property name="atributoPadre"></property>
 
-		<subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija1"
+		<subclass name="com.chuidiang.ejemplos.Hija1"
 			discriminator-value="Hija1">
 			<property name="atributoHija1"></property>
 		</subclass>
 
-		<subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija2"
+		<subclass name="com.chuidiang.ejemplos.Hija2"
 			discriminator-value="Hija2">
 			<property name="atributoHija2"></property>
 		</subclass>

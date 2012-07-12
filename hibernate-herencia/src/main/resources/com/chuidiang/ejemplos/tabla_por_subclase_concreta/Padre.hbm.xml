@@ -3,17 +3,17 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.chuidiang.ejemplos.tabla_por_subclase.Padre" abstract="true">
+	<class name="com.chuidiang.ejemplos.Padre" abstract="true">
 		<id name="id">
 			<generator class="increment"></generator>
 		</id>
 		<property name="atributoPadre"></property>
 
-		<union-subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija1">
+		<union-subclass name="com.chuidiang.ejemplos.Hija1">
 			<property name="atributoHija1"></property>
 		</union-subclass>
 
-		<union-subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija2">
+		<union-subclass name="com.chuidiang.ejemplos.Hija2">
 			<property name="atributoHija2"></property>
 		</union-subclass>
 	</class>

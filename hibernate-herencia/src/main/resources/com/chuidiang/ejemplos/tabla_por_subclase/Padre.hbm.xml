@@ -3,18 +3,18 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.chuidiang.ejemplos.tabla_por_subclase.Padre">
+	<class name="com.chuidiang.ejemplos.Padre">
 		<id name="id">
 			<generator class="native"></generator>
 		</id>
 		<property name="atributoPadre"></property>
 
-		<joined-subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija1">
+		<joined-subclass name="com.chuidiang.ejemplos.Hija1">
 			<key column="id_padre"></key>
 			<property name="atributoHija1"></property>
 		</joined-subclass>
 
-		<joined-subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija2">
+		<joined-subclass name="com.chuidiang.ejemplos.Hija2">
 			<key column="id_padre"></key>
 			<property name="atributoHija2"></property>
 		</joined-subclass>
