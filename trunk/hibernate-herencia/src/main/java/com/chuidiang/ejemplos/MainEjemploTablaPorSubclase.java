@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.chuidiang.ejemplos.tabla_por_subclase.Hija1;
-import com.chuidiang.ejemplos.tabla_por_subclase.Hija2;
-import com.chuidiang.ejemplos.tabla_por_subclase.Padre;
 
 public class MainEjemploTablaPorSubclase {
     public static void main(String[] args) {

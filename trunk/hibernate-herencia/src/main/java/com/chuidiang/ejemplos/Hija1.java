@@ -1,4 +1,4 @@
-package com.chuidiang.ejemplos.tabla_por_subclase;
+package com.chuidiang.ejemplos;
 
 public class Hija1 extends Padre {
     int atributoHija1;
