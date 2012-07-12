@@ -1,11 +1,11 @@
-package com.chuidiang.ejemplos;
+package com.chuidiang.ejemplos.tabla_por_subclase;
 
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 
-public class MainEjemploHibernate {
+public class MainEjemploTablaPorSubclase {
     public static void main(String[] args) {
         insertaAlgunDato();
         consultaDatos();

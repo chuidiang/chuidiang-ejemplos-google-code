@@ -1,4 +1,4 @@
-package com.chuidiang.ejemplos;
+package com.chuidiang.ejemplos.tabla_por_subclase;
 
 import java.util.Date;
 

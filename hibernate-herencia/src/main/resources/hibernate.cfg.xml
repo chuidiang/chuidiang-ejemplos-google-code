@@ -19,7 +19,7 @@
 		<property name="hibernate.connection.password"></property>
 
 		<property name="hibernate.hbm2ddl.auto">create</property>
-		<mapping resource="com/chuidiang/ejemplos/dato.hbm.xml" />
+		<mapping resource="com/chuidiang/ejemplos/tabla_por_subclase/Padre.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
 
