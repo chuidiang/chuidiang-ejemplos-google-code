@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.chuidiang.ejemplos.tabla_por_subclase.Padre"
+		discriminator-value="Padre">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<discriminator column="clase" type="string" />
+		<property name="atributoPadre"></property>
+
+		<subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija1"
+			discriminator-value="Hija1">
+			<property name="atributoHija1"></property>
+		</subclass>
+
+		<subclass name="com.chuidiang.ejemplos.tabla_por_subclase.Hija2"
+			discriminator-value="Hija2">
+			<property name="atributoHija2"></property>
+		</subclass>
+	</class>
+</hibernate-mapping>
