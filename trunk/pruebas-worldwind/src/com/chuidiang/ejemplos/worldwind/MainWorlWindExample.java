@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-public class PolygonExample extends ApplicationTemplate {
+public class MainWorlWindExample extends ApplicationTemplate {
 	public static class AppFrame extends ApplicationTemplate.AppFrame {
 		private static final int NUM_SIMBOLOS_APP6 = 100;
 		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
