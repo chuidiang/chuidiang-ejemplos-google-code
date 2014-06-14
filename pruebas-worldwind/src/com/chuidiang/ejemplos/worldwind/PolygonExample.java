@@ -29,7 +29,10 @@ import javax.swing.SwingUtilities;
 
 public class PolygonExample extends ApplicationTemplate {
 	public static class AppFrame extends ApplicationTemplate.AppFrame {
-		private Polygon poly;
+		private static final int NUM_SIMBOLOS_APP6 = 100;
+		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
+				{ 33 - 0, 0.0 } };
+		private static TrazasSensora[] trazas;
 		private RenderableLayer layer;
 
 		public AppFrame() {
@@ -40,43 +43,20 @@ public class PolygonExample extends ApplicationTemplate {
 
 			layer = new RenderableLayer();
 
-			// Set the basic attributes of your polygon
-			ShapeAttributes normalAttributes = new BasicShapeAttributes();
-			normalAttributes.setInteriorMaterial(Material.YELLOW);
-			normalAttributes.setOutlineWidth(2);
-			normalAttributes.setOutlineOpacity(0.5);
-			normalAttributes.setDrawInterior(true);
-			normalAttributes.setDrawOutline(true);
-
-			// Set the coordinates (in degrees) to draw your polygon
-			// To radians just change the method the class Position
-			// to fromRadians().
-			ArrayList positions = new ArrayList();
-			positions.add(Position.fromDegrees(52, 10, 5e4));
-			positions.add(Position.fromDegrees(55, 11, 5e4));
-			positions.add(Position.fromDegrees(52, 14, 5e4));
-
-			poly = new Polygon(positions);
-
-			poly.setAttributes(normalAttributes);
-			// Tooltip text of the polygon
-			poly.setValue(AVKey.DISPLAY_NAME, "My first polygon");
-			// Add the just created polygon to a renderable layer
-			layer.addRenderable(poly);
-
-			positions = new ArrayList();
-			positions.add(Position.fromDegrees(0, 0));
-			positions.add(new Position(Position.greatCircleEndPosition(
-					Position.fromDegrees(0, 0), 45.0, 180.0), 0));
-
-			Polyline linea = new Polyline(positions);
-			linea.setColor(Color.RED);
-			linea.setFilled(true);
-			linea.setFollowTerrain(true);
-			layer.addRenderable(linea);
-
-			Iterable<Renderable> simbolos = SimbolosAPP6.getSimbolos(1000);
+			Iterable<Renderable> simbolos = SimbolosAPP6
+					.getSimbolos(NUM_SIMBOLOS_APP6);
 			layer.addRenderables(simbolos);
+
+			trazas = new TrazasSensora[sensoras.length];
+			for (int i = 0; i < sensoras.length; i++) {
+				trazas[i] = new TrazasSensora(sensoras[i][0], sensoras[i][1]);
+				layer.addRenderables(trazas[i].getTrazas(100));
+			}
+
+			ShapeFile
+					.addShapefile(
+							"C:/Users/JAVIER/Downloads/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp",
+							layer);
 
 			// getWwd().getModel().setLayers(new LayerList(new Layer[]
 			// {layer}));
@@ -98,26 +78,13 @@ public class PolygonExample extends ApplicationTemplate {
 
 								@Override
 								public void run() {
-									Position p = (Position) ((ArrayList) (poly
-											.getBoundaries().get(0))).get(1);
-									ArrayList positions = new ArrayList();
-									positions.add(Position.fromDegrees(
-											latitude + 0.1, 10, 5e4));
-									positions.add(Position.fromDegrees(55, 11,
-											5e4));
-									positions.add(Position.fromDegrees(52, 14,
-											5e4));
-									poly.setOuterBoundary(positions);
-									// poly.moveTo(Position.fromDegrees(latitude
-									// + 0.1, 10, 5e4));
-									latitude = latitude + 0.1;
-									// layer.firePropertyChange(AVKey.LAYER,
-									// null, AppFrame.this.getWwd());
-
 									SimbolosAPP6.mueveSymbols();
 
-									AppFrame.this.getWwd().redraw();
+									for (TrazasSensora traza : trazas) {
+										traza.mueveTrazas();
+									}
 
+									AppFrame.this.getWwd().redraw();
 								}
 							});
 						} catch (InterruptedException e) {
@@ -132,8 +99,8 @@ public class PolygonExample extends ApplicationTemplate {
 	public static void main(String[] args) {
 		// Set the initial configurations of your NASA World Wind App
 		// Altitute, logitude and latitute, and window caption.
-		Configuration.setValue(AVKey.INITIAL_LATITUDE, Integer.valueOf(54));
-		Configuration.setValue(AVKey.INITIAL_LONGITUDE, Integer.valueOf(13));
+		Configuration.setValue(AVKey.INITIAL_LATITUDE, Integer.valueOf(36));
+		Configuration.setValue(AVKey.INITIAL_LONGITUDE, Integer.valueOf(-6));
 		Configuration
 				.setValue(AVKey.INITIAL_ALTITUDE, Integer.valueOf(1900000));
 		ApplicationTemplate.start("NASA World Wind Tutorial - Simple Polygons",
