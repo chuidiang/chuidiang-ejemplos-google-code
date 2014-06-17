@@ -45,7 +45,6 @@ public class SimbolosAPP6 {
 			simbolo.setValue("velocidad", Math.random());
 			simbolo.setValue("direccion", angulo);
 			simbolo.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-			
 		}
 
 		return listaSimbolos;
