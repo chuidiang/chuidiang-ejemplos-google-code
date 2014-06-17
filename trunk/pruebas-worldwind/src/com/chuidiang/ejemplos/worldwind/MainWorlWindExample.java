@@ -20,6 +20,7 @@ import gov.nasa.worldwind.symbology.TacticalSymbolAttributes;
 import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalSymbol;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
+import gov.nasa.worldwindx.examples.util.ExampleUtil;
 
 import java.awt.Color;
 import java.io.File;
@@ -29,7 +30,7 @@ import javax.swing.SwingUtilities;
 
 public class MainWorlWindExample extends ApplicationTemplate {
 	public static class AppFrame extends ApplicationTemplate.AppFrame {
-		private static final int NUM_SIMBOLOS_APP6 = 100;
+		private static final int NUM_SIMBOLOS_APP6 = 10;
 		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
 				{ 33 - 0, 0.0 } };
 		private static TrazasSensora[] trazas;
@@ -50,7 +51,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			trazas = new TrazasSensora[sensoras.length];
 			for (int i = 0; i < sensoras.length; i++) {
 				trazas[i] = new TrazasSensora(sensoras[i][0], sensoras[i][1]);
-				layer.addRenderables(trazas[i].getTrazas(100));
+				layer.addRenderables(trazas[i].getTrazas(10));
 			}
 
 			ShapeFile
@@ -63,8 +64,18 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			// Add the layer to the model.
 			insertBeforeCompass(getWwd(), layer);
 			// Update layer panel
+			
+			Layer layerTiff = FicheroTiff.leeFichero(
+					"d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
+			
+			insertBeforeCompass(getWwd(), layerTiff);
+			
 			this.getLayerPanel().update(this.getWwd());
+			
+			actualizaDatosPeriodicamente();
+		}
 
+		private void actualizaDatosPeriodicamente() {
 			new Thread() {
 				private double latitude;
 
