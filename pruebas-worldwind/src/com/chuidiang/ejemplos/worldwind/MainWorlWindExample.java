@@ -1,64 +1,94 @@
 package com.chuidiang.ejemplos.worldwind;
 
 import gov.nasa.worldwind.Configuration;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.formats.shapefile.Shapefile;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.ExtrudedPolygon;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Polygon;
-import gov.nasa.worldwind.render.Polyline;
+import gov.nasa.worldwind.render.BalloonAttributes;
+import gov.nasa.worldwind.render.BasicBalloonAttributes;
+import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.symbology.BasicTacticalSymbolAttributes;
+import gov.nasa.worldwind.render.Size;
 import gov.nasa.worldwind.symbology.TacticalGraphic;
-import gov.nasa.worldwind.symbology.TacticalSymbolAttributes;
-import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalGraphic;
 import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalSymbol;
-import gov.nasa.worldwind.util.VecBuffer;
+import gov.nasa.worldwindx.applications.sar.SARSegmentPlane.AltitudeLabelAttributes;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
-import gov.nasa.worldwindx.examples.util.ExampleUtil;
-
-import java.awt.Color;
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
 public class MainWorlWindExample extends ApplicationTemplate {
+
 	public static class AppFrame extends ApplicationTemplate.AppFrame {
 		private static final int NUM_TRAZAS_POR_SENSORA = 10;
 		private static final int NUM_SIMBOLOS_APP6 = 10;
 		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
 				{ 33 - 0, 0.0 } };
 		private static TrazasSensora[] trazas;
-		
+		private RenderableLayer layer;
+		private GlobeAnnotation balloon = null;
 
 		public AppFrame() {
 			super(true, true, false);
 
 			// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
+			this.getWwd().addSelectListener(new SelectListener() {
+
+				@Override
+				public void selected(SelectEvent event) {
+					if (event.isLeftClick()) {
+						showBalloon(event.getTopObject());
+					} 
+				}
+			});
 
 			addSymbolLayer();
 			addShapeLayer();
-			
-			
-			
-//			addTiffLayer();
-			
+			// addTiffLayer();
+
 			this.getLayerPanel().update(this.getWwd());
-			
+
 			actualizaDatosPeriodicamente();
 		}
 
+		protected void showBalloon(Object objeto) {
+			if (null!=balloon){
+				layer.removeRenderable(balloon);
+			}
+
+			if (!(objeto instanceof MilStd2525TacticalSymbol)) {
+				return;
+			}
+			MilStd2525TacticalSymbol simbolo = (MilStd2525TacticalSymbol) objeto;
+			String htmlString = "<p>Soy el simbolo " + simbolo.getIdentifier()
+					+ "</p>" + "<p>y voy a " + simbolo.getValue("velocidad")
+					+ "</p>" + "<p>con rumbo " + simbolo.getValue("direccion")
+					+ "</p>";
+
+			Position balloonPosition = simbolo.getPosition();
+
+			if (null == balloon) {
+				balloon = new GlobeAnnotation(htmlString,
+						balloonPosition);
+			} else {
+				balloon.setText(htmlString);
+				balloon.setPosition(balloonPosition);
+			}
+			
+			this.layer.addRenderable(balloon);
+			// Size the balloon to provide enough space for its content.
+			BalloonAttributes attrs = new BasicBalloonAttributes();
+			attrs.setSize(new Size(Size.NATIVE_DIMENSION, 0d, null,
+					Size.NATIVE_DIMENSION, 0d, null));
+			
+		}
+
 		private void addTiffLayer() {
-			Layer layerTiff = FicheroTiff.leeFichero(
-					"d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
+			Layer layerTiff = FicheroTiff
+					.leeFichero("d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
 			insertBeforeCompass(getWwd(), layerTiff);
 		}
 
@@ -73,8 +103,9 @@ public class MainWorlWindExample extends ApplicationTemplate {
 		}
 
 		private void addSymbolLayer() {
-			RenderableLayer layer = new RenderableLayer();
-			
+			layer = new RenderableLayer();
+			layer.setPickEnabled(true);
+
 			Iterable<Renderable> simbolos = SimbolosAPP6
 					.getSimbolos(NUM_SIMBOLOS_APP6);
 			layer.addRenderables(simbolos);
@@ -82,13 +113,13 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			trazas = new TrazasSensora[sensoras.length];
 			for (int i = 0; i < sensoras.length; i++) {
 				trazas[i] = new TrazasSensora(sensoras[i][0], sensoras[i][1]);
-				layer.addRenderables(trazas[i].getTrazas(NUM_TRAZAS_POR_SENSORA));
+				layer.addRenderables(trazas[i]
+						.getTrazas(NUM_TRAZAS_POR_SENSORA));
 			}
-			
-			
+
 			TacticalGraphic tacticalGraphic = SimbolosAPP6.getTacticalGraphic();
 			layer.addRenderable(tacticalGraphic);
-			
+
 			insertBeforeCompass(getWwd(), layer);
 		}
 
@@ -132,6 +163,6 @@ public class MainWorlWindExample extends ApplicationTemplate {
 		Configuration
 				.setValue(AVKey.INITIAL_ALTITUDE, Integer.valueOf(1900000));
 		ApplicationTemplate.start("NASA World Wind Tutorial - Simple Polygons",
-				AppFrame.class);
+				AppFrame.class); 
 	}
 }
