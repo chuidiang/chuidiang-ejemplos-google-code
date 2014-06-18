@@ -16,7 +16,9 @@ import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.symbology.BasicTacticalSymbolAttributes;
+import gov.nasa.worldwind.symbology.TacticalGraphic;
 import gov.nasa.worldwind.symbology.TacticalSymbolAttributes;
+import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalGraphic;
 import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalSymbol;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
@@ -30,20 +32,49 @@ import javax.swing.SwingUtilities;
 
 public class MainWorlWindExample extends ApplicationTemplate {
 	public static class AppFrame extends ApplicationTemplate.AppFrame {
+		private static final int NUM_TRAZAS_POR_SENSORA = 10;
 		private static final int NUM_SIMBOLOS_APP6 = 10;
 		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
 				{ 33 - 0, 0.0 } };
 		private static TrazasSensora[] trazas;
-		private RenderableLayer layer;
+		
 
 		public AppFrame() {
 			super(true, true, false);
 
-			// Enable shape dragging, if you want.
 			// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
 
-			layer = new RenderableLayer();
+			addSymbolLayer();
+			addShapeLayer();
+			
+			
+			
+//			addTiffLayer();
+			
+			this.getLayerPanel().update(this.getWwd());
+			
+			actualizaDatosPeriodicamente();
+		}
 
+		private void addTiffLayer() {
+			Layer layerTiff = FicheroTiff.leeFichero(
+					"d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
+			insertBeforeCompass(getWwd(), layerTiff);
+		}
+
+		private void addShapeLayer() {
+			RenderableLayer shapeLayer = new RenderableLayer();
+			shapeLayer.setName("Shapefile");
+			ShapeFile
+					.addShapefile(
+							"C:/Users/JAVIER/Downloads/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp",
+							shapeLayer);
+			insertBeforeCompass(getWwd(), shapeLayer);
+		}
+
+		private void addSymbolLayer() {
+			RenderableLayer layer = new RenderableLayer();
+			
 			Iterable<Renderable> simbolos = SimbolosAPP6
 					.getSimbolos(NUM_SIMBOLOS_APP6);
 			layer.addRenderables(simbolos);
@@ -51,28 +82,14 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			trazas = new TrazasSensora[sensoras.length];
 			for (int i = 0; i < sensoras.length; i++) {
 				trazas[i] = new TrazasSensora(sensoras[i][0], sensoras[i][1]);
-				layer.addRenderables(trazas[i].getTrazas(10));
+				layer.addRenderables(trazas[i].getTrazas(NUM_TRAZAS_POR_SENSORA));
 			}
-
-			ShapeFile
-					.addShapefile(
-							"C:/Users/JAVIER/Downloads/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp",
-							layer);
-
-			// getWwd().getModel().setLayers(new LayerList(new Layer[]
-			// {layer}));
-			// Add the layer to the model.
+			
+			
+			TacticalGraphic tacticalGraphic = SimbolosAPP6.getTacticalGraphic();
+			layer.addRenderable(tacticalGraphic);
+			
 			insertBeforeCompass(getWwd(), layer);
-			// Update layer panel
-			
-			Layer layerTiff = FicheroTiff.leeFichero(
-					"d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
-			
-			insertBeforeCompass(getWwd(), layerTiff);
-			
-			this.getLayerPanel().update(this.getWwd());
-			
-			actualizaDatosPeriodicamente();
 		}
 
 		private void actualizaDatosPeriodicamente() {

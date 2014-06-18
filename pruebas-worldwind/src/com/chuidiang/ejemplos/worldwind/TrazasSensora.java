@@ -1,20 +1,11 @@
 package com.chuidiang.ejemplos.worldwind;
 
-import gov.nasa.worldwind.WorldWind;
-import gov.nasa.worldwind.avlist.AVList;
-import gov.nasa.worldwind.avlist.AVListImpl;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.symbology.BasicTacticalSymbolAttributes;
-import gov.nasa.worldwind.symbology.SymbologyConstants;
-import gov.nasa.worldwind.symbology.TacticalSymbolAttributes;
-import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalSymbol;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
