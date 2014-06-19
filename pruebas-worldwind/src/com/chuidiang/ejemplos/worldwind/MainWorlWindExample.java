@@ -1,20 +1,29 @@
 package com.chuidiang.ejemplos.worldwind;
 
+import gov.nasa.worldwind.BasicModel;
 import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.layers.WorldMapLayer;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.symbology.TacticalGraphic;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
+import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
+import gov.nasa.worldwindx.examples.LayerPanel;
+import gov.nasa.worldwindx.examples.util.HighlightController;
+import gov.nasa.worldwindx.examples.util.ToolTipController;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class MainWorlWindExample extends ApplicationTemplate {
+public class MainWorlWindExample  {
 
-	public static class AppFrame extends ApplicationTemplate.AppFrame {
 		private static final int NUM_TRAZAS_POR_SENSORA = 10;
 		private static final int NUM_SIMBOLOS_APP6 = 10;
 		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
@@ -22,12 +31,25 @@ public class MainWorlWindExample extends ApplicationTemplate {
 		private static TrazasSensora[] trazas;
 		private RenderableLayer layer;
 		private ElPopUp balloon = new ElPopUp();
+		private WorldWindowGLCanvas canvas;
 
-		public AppFrame() {
-			super(true, true, false);
+		public MainWorlWindExample() {
+			final JFrame ventana = new JFrame("Ejemplo WorlWind");
+			
+			canvas = new WorldWindowGLCanvas();
+            canvas.addSelectListener(new ClickAndGoSelectListener(canvas, WorldMapLayer.class));
+            new ToolTipController(canvas, AVKey.DISPLAY_NAME, null);
+            new HighlightController(canvas, SelectEvent.ROLLOVER);
+
+
+			ventana.getContentPane().add(canvas);
+			canvas.setModel(new BasicModel());
+			
+			LayerPanel panelCapas = new LayerPanel(canvas);
+			ventana.getContentPane().add(panelCapas,BorderLayout.WEST);
 
 			// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
-			this.getWwd().addSelectListener(new SelectListener() {
+			canvas.addSelectListener(new SelectListener() {
 
 				@Override
 				public void selected(SelectEvent event) {
@@ -42,15 +64,29 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			layer.addRenderable(balloon);
 			// addTiffLayer();
 
-			this.getLayerPanel().update(this.getWwd());
+			panelCapas.update(canvas);
+			
+			ventana.setSize(1200,900);
+			ventana.setLocationRelativeTo(null);
+			ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			SwingUtilities.invokeLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					ventana.setVisible(true);
+				}
+			});
 
 			actualizaDatosPeriodicamente();
+			
+			
 		}
 
 		private void addTiffLayer() {
 			Layer layerTiff = FicheroTiff
 					.leeFichero("d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
-			insertBeforeCompass(getWwd(), layerTiff);
+			ApplicationTemplate.insertBeforeCompass(canvas, layerTiff);
 		}
 
 		private void addShapeLayer() {
@@ -60,7 +96,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 					.addShapefile(
 							"C:/Users/JAVIER/Downloads/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp",
 							shapeLayer);
-			insertBeforeCompass(getWwd(), shapeLayer);
+			ApplicationTemplate.insertBeforeCompass(canvas, shapeLayer);
 		}
 
 		private void addSymbolLayer() {
@@ -81,7 +117,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			TacticalGraphic tacticalGraphic = SimbolosAPP6.getTacticalGraphic();
 			layer.addRenderable(tacticalGraphic);
 
-			insertBeforeCompass(getWwd(), layer);
+			ApplicationTemplate.insertBeforeCompass(canvas, layer);
 		}
 
 		private void actualizaDatosPeriodicamente() {
@@ -104,7 +140,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 										traza.mueveTrazas();
 									}
 
-									AppFrame.this.getWwd().redraw();
+									canvas.redraw();
 								}
 							});
 						} catch (InterruptedException e) {
@@ -114,7 +150,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 				}
 			}.start();
 		}
-	}
+	
 
 	public static void main(String[] args) {
 		// Set the initial configurations of your NASA World Wind App
@@ -123,7 +159,6 @@ public class MainWorlWindExample extends ApplicationTemplate {
 		Configuration.setValue(AVKey.INITIAL_LONGITUDE, Integer.valueOf(-6));
 		Configuration
 				.setValue(AVKey.INITIAL_ALTITUDE, Integer.valueOf(1900000));
-		ApplicationTemplate.start("NASA World Wind Tutorial - Simple Polygons",
-				AppFrame.class); 
+		new MainWorlWindExample();
 	}
 }
