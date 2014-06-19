@@ -1,5 +1,7 @@
 package com.chuidiang.ejemplos.worldwind;
 
+import java.awt.Dimension;
+
 import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -56,7 +58,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 
 		protected void showBalloon(Object objeto) {
 			if (null!=balloon){
-				layer.removeRenderable(balloon);
+				balloon.getAttributes().setVisible(false);
 			}
 
 			if (!(objeto instanceof MilStd2525TacticalSymbol)) {
@@ -73,16 +75,15 @@ public class MainWorlWindExample extends ApplicationTemplate {
 			if (null == balloon) {
 				balloon = new GlobeAnnotation(htmlString,
 						balloonPosition);
+				balloon.getAttributes().setSize(new Dimension(100, 200));
+				this.layer.addRenderable(balloon);
 			} else {
 				balloon.setText(htmlString);
 				balloon.setPosition(balloonPosition);
 			}
 			
-			this.layer.addRenderable(balloon);
+			balloon.getAttributes().setVisible(true);
 			// Size the balloon to provide enough space for its content.
-			BalloonAttributes attrs = new BasicBalloonAttributes();
-			attrs.setSize(new Size(Size.NATIVE_DIMENSION, 0d, null,
-					Size.NATIVE_DIMENSION, 0d, null));
 			
 		}
 
