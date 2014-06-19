@@ -1,23 +1,13 @@
 package com.chuidiang.ejemplos.worldwind;
 
-import java.awt.Dimension;
-
 import gov.nasa.worldwind.Configuration;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BalloonAttributes;
-import gov.nasa.worldwind.render.BasicBalloonAttributes;
-import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.Size;
 import gov.nasa.worldwind.symbology.TacticalGraphic;
-import gov.nasa.worldwind.symbology.milstd2525.MilStd2525TacticalSymbol;
-import gov.nasa.worldwindx.applications.sar.SARSegmentPlane.AltitudeLabelAttributes;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
 
 import javax.swing.SwingUtilities;
@@ -31,7 +21,7 @@ public class MainWorlWindExample extends ApplicationTemplate {
 				{ 33 - 0, 0.0 } };
 		private static TrazasSensora[] trazas;
 		private RenderableLayer layer;
-		private GlobeAnnotation balloon = null;
+		private ElPopUp balloon = new ElPopUp();
 
 		public AppFrame() {
 			super(true, true, false);
@@ -42,49 +32,19 @@ public class MainWorlWindExample extends ApplicationTemplate {
 				@Override
 				public void selected(SelectEvent event) {
 					if (event.isLeftClick()) {
-						showBalloon(event.getTopObject());
+						balloon.showBalloon(event.getTopObject());
 					} 
 				}
 			});
 
 			addSymbolLayer();
 			addShapeLayer();
+			layer.addRenderable(balloon);
 			// addTiffLayer();
 
 			this.getLayerPanel().update(this.getWwd());
 
 			actualizaDatosPeriodicamente();
-		}
-
-		protected void showBalloon(Object objeto) {
-			if (null!=balloon){
-				balloon.getAttributes().setVisible(false);
-			}
-
-			if (!(objeto instanceof MilStd2525TacticalSymbol)) {
-				return;
-			}
-			MilStd2525TacticalSymbol simbolo = (MilStd2525TacticalSymbol) objeto;
-			String htmlString = "<p>Soy el simbolo " + simbolo.getIdentifier()
-					+ "</p>" + "<p>y voy a " + simbolo.getValue("velocidad")
-					+ "</p>" + "<p>con rumbo " + simbolo.getValue("direccion")
-					+ "</p>";
-
-			Position balloonPosition = simbolo.getPosition();
-
-			if (null == balloon) {
-				balloon = new GlobeAnnotation(htmlString,
-						balloonPosition);
-				balloon.getAttributes().setSize(new Dimension(100, 200));
-				this.layer.addRenderable(balloon);
-			} else {
-				balloon.setText(htmlString);
-				balloon.setPosition(balloonPosition);
-			}
-			
-			balloon.getAttributes().setVisible(true);
-			// Size the balloon to provide enough space for its content.
-			
 		}
 
 		private void addTiffLayer() {
