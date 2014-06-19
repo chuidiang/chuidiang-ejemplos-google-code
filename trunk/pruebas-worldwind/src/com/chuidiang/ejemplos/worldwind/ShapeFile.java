@@ -32,8 +32,6 @@ public class ShapeFile {
 
 			for (int i = 0; i < record.getNumberOfParts(); i++) {
 				VecBuffer vectorBuffer = record.getPointBuffer(i);
-				// Setting height
-				Double height = 500.50;
 				// Creating an instance of ExtrudedPolygon
 				Polygon polygon = new Polygon();
 				// Setting the polygon outer boundary based on
