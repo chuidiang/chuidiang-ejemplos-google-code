@@ -3,6 +3,7 @@ package com.chuidiang.ejemplos.worldwind;
 import gov.nasa.worldwind.BasicModel;
 import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.awt.ViewInputAttributes;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
@@ -18,8 +19,12 @@ import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 public class MainWorlWindExample  {
@@ -32,25 +37,20 @@ public class MainWorlWindExample  {
 		private RenderableLayer layer;
 		private ElPopUp balloon = new ElPopUp();
 		private WorldWindowGLCanvas canvas;
+		private DibujaPoligonos dibujaPoligonos;
 
 		public MainWorlWindExample() {
 			final JFrame ventana = new JFrame("Ejemplo WorlWind");
 			
-			canvas = new WorldWindowGLCanvas();
-            canvas.addSelectListener(new ClickAndGoSelectListener(canvas, WorldMapLayer.class));
-            new ToolTipController(canvas, AVKey.DISPLAY_NAME, null);
-            new HighlightController(canvas, SelectEvent.ROLLOVER);
-
-
+			creaCanvas();
+			
 			ventana.getContentPane().add(canvas);
-			canvas.setModel(new BasicModel());
 			
 			LayerPanel panelCapas = new LayerPanel(canvas);
 			ventana.getContentPane().add(panelCapas,BorderLayout.WEST);
 
 			// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
 			canvas.addSelectListener(new SelectListener() {
-
 				@Override
 				public void selected(SelectEvent event) {
 					if (event.isLeftClick()) {
@@ -58,11 +58,27 @@ public class MainWorlWindExample  {
 					} 
 				}
 			});
+			
+			
 
 			addSymbolLayer();
 			addShapeLayer();
 			layer.addRenderable(balloon);
+			dibujaPoligonos = new DibujaPoligonos(canvas);
 			// addTiffLayer();
+			
+			JToolBar toolbar = new JToolBar();
+			
+			JButton dibuja = new JButton("poligono");
+			toolbar.add(dibuja);
+			dibuja.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					dibujaPoligonos.setActivo(true);
+				}
+			});
+			ventana.getContentPane().add(toolbar,BorderLayout.NORTH);
 
 			panelCapas.update(canvas);
 			
@@ -81,6 +97,18 @@ public class MainWorlWindExample  {
 			actualizaDatosPeriodicamente();
 			
 			
+		}
+
+		private void creaCanvas() {
+			canvas = new WorldWindowGLCanvas();
+            canvas.addSelectListener(new ClickAndGoSelectListener(canvas, WorldMapLayer.class));
+            new ToolTipController(canvas, AVKey.DISPLAY_NAME, null);
+            new HighlightController(canvas, SelectEvent.ROLLOVER);
+			canvas.setModel(new BasicModel());
+			ViewInputAttributes attrs = canvas.getView().getViewInputHandler().getAttributes();         
+			attrs.getActionMap(ViewInputAttributes.DEVICE_MOUSE)
+			    .getActionAttributes(ViewInputAttributes.VIEW_MOVE_TO)
+			    .setMouseActionListener(null);
 		}
 
 		private void addTiffLayer() {
