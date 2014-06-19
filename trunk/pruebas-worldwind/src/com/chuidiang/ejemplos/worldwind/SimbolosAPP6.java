@@ -56,6 +56,7 @@ public class SimbolosAPP6 {
 			simbolo.setAttributes(normalAttributes);
 			simbolo.setValue("velocidad", Math.random());
 			simbolo.setValue("direccion", angulo);
+			simbolo.setValue(AVKey.DISPLAY_NAME, simbolo.getIdentifier());
 			simbolo.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
 		}
 
@@ -69,6 +70,7 @@ public class SimbolosAPP6 {
 			double direccion = (Double) app6.getValue("direccion");
 			Position posicionActual = app6.getPosition();
 			double angulo = direccion + Math.random() / 100.0;
+			Position antiguaPoscion = app6.getPosition();
 			Position nuevaPosicion = new Position(
 					Position.greatCircleEndPosition(posicionActual,
 							Angle.fromDegrees(angulo),
@@ -77,6 +79,7 @@ public class SimbolosAPP6 {
 					Angle.fromDegrees(angulo));
 			app6.setValue("direccion", angulo);
 			app6.moveTo(nuevaPosicion);
+			app6.firePropertyChange(AVKey.POSITION, antiguaPoscion, nuevaPosicion);
 		}
 
 	}

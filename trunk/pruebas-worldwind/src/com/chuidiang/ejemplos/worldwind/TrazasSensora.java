@@ -1,5 +1,6 @@
 package com.chuidiang.ejemplos.worldwind;
 
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polyline;
@@ -35,6 +36,7 @@ public class TrazasSensora {
 			linea.setColor(colores[i % (colores.length)]);
 			linea.setFollowTerrain(true);
 			linea.setValue("azimuth", azimuth);
+			linea.setValue(AVKey.DISPLAY_NAME, Double.toString(azimuth));
 			listaTrazas.add(linea);
 		}
 
