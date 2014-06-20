@@ -7,11 +7,13 @@ import gov.nasa.worldwind.awt.ViewInputAttributes;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
+import gov.nasa.worldwind.globes.EarthFlat;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.layers.WorldMapLayer;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.symbology.TacticalGraphic;
+import gov.nasa.worldwind.view.orbit.FlatOrbitView;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
 import gov.nasa.worldwindx.examples.ClickAndGoSelectListener;
 import gov.nasa.worldwindx.examples.LayerPanel;
@@ -39,6 +41,7 @@ public class MainWorlWindExample {
 	private ElPopUp balloon = new ElPopUp();
 	private WorldWindowGLCanvas canvas;
 	private DibujaPoligonos dibujaPoligonos;
+	private LayerPanel panelCapas;
 
 	public MainWorlWindExample() {
 		final JFrame ventana = new JFrame("Ejemplo WorlWind");
@@ -47,7 +50,7 @@ public class MainWorlWindExample {
 
 		ventana.getContentPane().add(canvas);
 
-		LayerPanel panelCapas = new LayerPanel(canvas);
+		panelCapas = new LayerPanel(canvas);
 		ventana.getContentPane().add(panelCapas, BorderLayout.WEST);
 
 		// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
@@ -64,7 +67,8 @@ public class MainWorlWindExample {
 		addShapeLayers();
 		layer.addRenderable(balloon);
 		dibujaPoligonos = new DibujaPoligonos(canvas);
-		// addTiffLayer();
+		
+		addTiffLayer();
 
 		JToolBar toolbar = new JToolBar();
 
@@ -109,12 +113,24 @@ public class MainWorlWindExample {
 		attrs.getActionMap(ViewInputAttributes.DEVICE_MOUSE)
 				.getActionAttributes(ViewInputAttributes.VIEW_MOVE_TO)
 				.setMouseActionListener(null);
+//		attrs.getActionMap(ViewInputAttributes.DEVICE_MOUSE)
+//		.getActionAttributes(ViewInputAttributes.VIEW_ROTATE)
+//		.setMouseActionListener(null);
 	}
 
 	private void addTiffLayer() {
-		Layer layerTiff = FicheroTiff
-				.leeFichero("d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
-		ApplicationTemplate.insertBeforeCompass(canvas, layerTiff);
+		
+		new Thread() {
+			public void run() {
+				long time = System.currentTimeMillis();
+				Layer layerTiff = FicheroTiff
+						.leeFichero("KazajstanOsat_tiled.tif");
+				System.out.println("tarda "+(System.currentTimeMillis()-time));
+				ApplicationTemplate.insertBeforeCompass(canvas, layerTiff);
+				panelCapas.update(canvas);
+			}
+		}.start();
+		
 	}
 
 	private void addShapeLayers() {
@@ -185,6 +201,7 @@ public class MainWorlWindExample {
 	}
 
 	public static void main(String[] args) {
+		System.setProperty("java.library.path", "D:/LIBRERIAS/worldwind/worldwind/lib-external/gdal");
 		System.setProperty("java.net.useSystemProxies", "true");
 		// Set the initial configurations of your NASA World Wind App
 		// Altitute, logitude and latitute, and window caption.
@@ -192,6 +209,9 @@ public class MainWorlWindExample {
 		Configuration.setValue(AVKey.INITIAL_LONGITUDE, Integer.valueOf(-6));
 		Configuration
 				.setValue(AVKey.INITIAL_ALTITUDE, Integer.valueOf(1900000));
+//        Configuration.setValue(AVKey.GLOBE_CLASS_NAME, EarthFlat.class.getName());
+//        Configuration.setValue(AVKey.VIEW_CLASS_NAME, FlatOrbitView.class.getName());
+
 		new MainWorlWindExample();
 	}
 }

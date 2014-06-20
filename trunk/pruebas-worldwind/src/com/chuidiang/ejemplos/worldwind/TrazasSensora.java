@@ -36,6 +36,7 @@ public class TrazasSensora {
 			linea.setColor(colores[i % (colores.length)]);
 			linea.setFollowTerrain(true);
 			linea.setValue("azimuth", azimuth);
+			linea.setLineWidth(100.0);
 			linea.setValue(AVKey.DISPLAY_NAME, Double.toString(azimuth));
 			listaTrazas.add(linea);
 		}
