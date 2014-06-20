@@ -95,9 +95,9 @@ public class SimbolosAPP6 {
 		MilStd2525GraphicFactory factory = new MilStd2525GraphicFactory();
 		// We need to create a position list that specifies the three control points in order
 		List<Position> positions = Arrays.asList(
-		    Position.fromDegrees(34.8073, -117.8180, 0), // PT. 1
-		    Position.fromDegrees(34.4845, -117.8495, 0), // PT. 2
-		    Position.fromDegrees(34.8686, -117.5088, 0)); // PT. 3
+		    Position.fromDegrees(42.8073, -6.8180, 0), // PT. 1
+		    Position.fromDegrees(42.4845, -6.8495, 0), // PT. 2
+		    Position.fromDegrees(42.8686, -6.5088, 0)); // PT. 3
 		 
 		// And now we can create the graphic
 		TacticalGraphic graphic = factory.createGraphic("GFGPSLA----AUSX",positions,null);
