@@ -30,8 +30,7 @@ public class SimbolosAPP6 {
 	private static double latitudInicial = 36.0;
 	private static double longitudInicial = -6.0;
 	private static TacticalSymbolAttributes normalAttributes = null;
-	private static String[] codigos = { "SHGPUCFRMS----G", "SFAPMFQM------A" };
-
+	private static String[] codigos = {"SHGPUCFRMS----G", "SFAPMFQM------A", "SNGPEWXH-------"};
 	public static Iterable<Renderable> getSimbolos(int numSimbolos) {
 		listaSimbolos = new LinkedList<>();
 
