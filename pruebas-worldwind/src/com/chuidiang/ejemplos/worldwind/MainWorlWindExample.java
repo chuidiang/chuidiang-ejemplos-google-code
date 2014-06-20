@@ -19,6 +19,7 @@ import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,160 +28,165 @@ import javax.swing.JFrame;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
-public class MainWorlWindExample  {
+public class MainWorlWindExample {
+	private static final String SHAPE_FILE = "D:/MAPAS/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp";
+	private static final int NUM_TRAZAS_POR_SENSORA = 10;
+	private static final int NUM_SIMBOLOS_APP6 = 10;
+	private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
+			{ 33 - 0, 0.0 } };
+	private static TrazasSensora[] trazas;
+	private RenderableLayer layer;
+	private ElPopUp balloon = new ElPopUp();
+	private WorldWindowGLCanvas canvas;
+	private DibujaPoligonos dibujaPoligonos;
 
-		private static final int NUM_TRAZAS_POR_SENSORA = 10;
-		private static final int NUM_SIMBOLOS_APP6 = 10;
-		private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },
-				{ 33 - 0, 0.0 } };
-		private static TrazasSensora[] trazas;
-		private RenderableLayer layer;
-		private ElPopUp balloon = new ElPopUp();
-		private WorldWindowGLCanvas canvas;
-		private DibujaPoligonos dibujaPoligonos;
+	public MainWorlWindExample() {
+		final JFrame ventana = new JFrame("Ejemplo WorlWind");
 
-		public MainWorlWindExample() {
-			final JFrame ventana = new JFrame("Ejemplo WorlWind");
-			
-			creaCanvas();
-			
-			ventana.getContentPane().add(canvas);
-			
-			LayerPanel panelCapas = new LayerPanel(canvas);
-			ventana.getContentPane().add(panelCapas,BorderLayout.WEST);
+		creaCanvas();
 
-			// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
-			canvas.addSelectListener(new SelectListener() {
-				@Override
-				public void selected(SelectEvent event) {
-					if (event.isLeftClick()) {
-						balloon.showBalloon(event.getTopObject());
-					} 
+		ventana.getContentPane().add(canvas);
+
+		LayerPanel panelCapas = new LayerPanel(canvas);
+		ventana.getContentPane().add(panelCapas, BorderLayout.WEST);
+
+		// this.getWwd().addSelectListener(new BasicDragger(this.getWwd()));
+		canvas.addSelectListener(new SelectListener() {
+			@Override
+			public void selected(SelectEvent event) {
+				if (event.isLeftClick()) {
+					balloon.showBalloon(event.getTopObject());
 				}
-			});
-			
-			
-
-			addSymbolLayer();
-			addShapeLayer();
-			layer.addRenderable(balloon);
-			dibujaPoligonos = new DibujaPoligonos(canvas);
-			// addTiffLayer();
-			
-			JToolBar toolbar = new JToolBar();
-			
-			JButton dibuja = new JButton("poligono");
-			toolbar.add(dibuja);
-			dibuja.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					dibujaPoligonos.setActivo(true);
-				}
-			});
-			ventana.getContentPane().add(toolbar,BorderLayout.NORTH);
-
-			panelCapas.update(canvas);
-			
-			ventana.setSize(1200,900);
-			ventana.setLocationRelativeTo(null);
-			ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					ventana.setVisible(true);
-				}
-			});
-
-			actualizaDatosPeriodicamente();
-			
-			
-		}
-
-		private void creaCanvas() {
-			canvas = new WorldWindowGLCanvas();
-            canvas.addSelectListener(new ClickAndGoSelectListener(canvas, WorldMapLayer.class));
-            new ToolTipController(canvas, AVKey.DISPLAY_NAME, null);
-            new HighlightController(canvas, SelectEvent.ROLLOVER);
-			canvas.setModel(new BasicModel());
-			ViewInputAttributes attrs = canvas.getView().getViewInputHandler().getAttributes();         
-			attrs.getActionMap(ViewInputAttributes.DEVICE_MOUSE)
-			    .getActionAttributes(ViewInputAttributes.VIEW_MOVE_TO)
-			    .setMouseActionListener(null);
-		}
-
-		private void addTiffLayer() {
-			Layer layerTiff = FicheroTiff
-					.leeFichero("d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
-			ApplicationTemplate.insertBeforeCompass(canvas, layerTiff);
-		}
-
-		private void addShapeLayer() {
-			RenderableLayer shapeLayer = new RenderableLayer();
-			shapeLayer.setName("Shapefile");
-			ShapeFile
-					.addShapefile(
-							"C:/Users/JAVIER/Downloads/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp",
-							shapeLayer);
-			ApplicationTemplate.insertBeforeCompass(canvas, shapeLayer);
-		}
-
-		private void addSymbolLayer() {
-			layer = new RenderableLayer();
-			layer.setPickEnabled(true);
-
-			Iterable<Renderable> simbolos = SimbolosAPP6
-					.getSimbolos(NUM_SIMBOLOS_APP6);
-			layer.addRenderables(simbolos);
-
-			trazas = new TrazasSensora[sensoras.length];
-			for (int i = 0; i < sensoras.length; i++) {
-				trazas[i] = new TrazasSensora(sensoras[i][0], sensoras[i][1]);
-				layer.addRenderables(trazas[i]
-						.getTrazas(NUM_TRAZAS_POR_SENSORA));
 			}
+		});
 
-			TacticalGraphic tacticalGraphic = SimbolosAPP6.getTacticalGraphic();
-			layer.addRenderable(tacticalGraphic);
+		addSymbolLayer();
+		addShapeLayer();
+		layer.addRenderable(balloon);
+		dibujaPoligonos = new DibujaPoligonos(canvas);
+		// addTiffLayer();
 
-			ApplicationTemplate.insertBeforeCompass(canvas, layer);
+		JToolBar toolbar = new JToolBar();
+
+		JButton dibuja = new JButton("poligono");
+		toolbar.add(dibuja);
+		dibuja.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				dibujaPoligonos.setActivo(true);
+			}
+		});
+		ventana.getContentPane().add(toolbar, BorderLayout.NORTH);
+
+		panelCapas.update(canvas);
+
+		ventana.setSize(1200, 900);
+		ventana.setLocationRelativeTo(null);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				ventana.setVisible(true);
+			}
+		});
+
+		actualizaDatosPeriodicamente();
+
+	}
+
+	private void creaCanvas() {
+		canvas = new WorldWindowGLCanvas();
+		canvas.addSelectListener(new ClickAndGoSelectListener(canvas,
+				WorldMapLayer.class));
+		new ToolTipController(canvas, AVKey.DISPLAY_NAME, null);
+		new HighlightController(canvas, SelectEvent.ROLLOVER);
+		canvas.setModel(new BasicModel());
+		ViewInputAttributes attrs = canvas.getView().getViewInputHandler()
+				.getAttributes();
+		attrs.getActionMap(ViewInputAttributes.DEVICE_MOUSE)
+				.getActionAttributes(ViewInputAttributes.VIEW_MOVE_TO)
+				.setMouseActionListener(null);
+	}
+
+	private void addTiffLayer() {
+		Layer layerTiff = FicheroTiff
+				.leeFichero("d:/JAVIER/Downloads/craterlake-imagery-30m.tif");
+		ApplicationTemplate.insertBeforeCompass(canvas, layerTiff);
+	}
+
+	private void addShapeLayer() {
+		RenderableLayer shapeLayer = new RenderableLayer();
+		shapeLayer.setName("Shapefile");
+		// ShapeFile
+		// .addShapefile(
+		// SHAPE_FILE,
+		// shapeLayer);
+		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/spain.shp", shapeLayer,
+				Color.YELLOW);
+		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/es_hiway.shp", shapeLayer,
+				Color.RED);
+		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/es_water.shp", shapeLayer,
+				Color.BLUE);
+
+		ApplicationTemplate.insertBeforeCompass(canvas, shapeLayer);
+	}
+
+	private void addSymbolLayer() {
+		layer = new RenderableLayer();
+		layer.setPickEnabled(true);
+
+		Iterable<Renderable> simbolos = SimbolosAPP6
+				.getSimbolos(NUM_SIMBOLOS_APP6);
+		layer.addRenderables(simbolos);
+
+		trazas = new TrazasSensora[sensoras.length];
+		for (int i = 0; i < sensoras.length; i++) {
+			trazas[i] = new TrazasSensora(sensoras[i][0], sensoras[i][1]);
+			layer.addRenderables(trazas[i].getTrazas(NUM_TRAZAS_POR_SENSORA));
 		}
 
-		private void actualizaDatosPeriodicamente() {
-			new Thread() {
-				private double latitude;
+		TacticalGraphic tacticalGraphic = SimbolosAPP6.getTacticalGraphic();
+		layer.addRenderable(tacticalGraphic);
 
-				public void run() {
-					latitude = 52;
-					while (true) {
-						try {
-							Thread.sleep(100);
+		ApplicationTemplate.insertBeforeCompass(canvas, layer);
+	}
 
-							SwingUtilities.invokeLater(new Runnable() {
+	private void actualizaDatosPeriodicamente() {
+		new Thread() {
+			private double latitude;
 
-								@Override
-								public void run() {
-									SimbolosAPP6.mueveSymbols();
+			public void run() {
+				latitude = 52;
+				while (true) {
+					try {
+						Thread.sleep(100);
 
-									for (TrazasSensora traza : trazas) {
-										traza.mueveTrazas();
-									}
+						SwingUtilities.invokeLater(new Runnable() {
 
-									canvas.redraw();
+							@Override
+							public void run() {
+								SimbolosAPP6.mueveSymbols();
+
+								for (TrazasSensora traza : trazas) {
+									traza.mueveTrazas();
 								}
-							});
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+
+								canvas.redraw();
+							}
+						});
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
-			}.start();
-		}
-	
+			}
+		}.start();
+	}
 
 	public static void main(String[] args) {
+		System.setProperty("java.net.useSystemProxies", "true");
 		// Set the initial configurations of your NASA World Wind App
 		// Altitute, logitude and latitute, and window caption.
 		Configuration.setValue(AVKey.INITIAL_LATITUDE, Integer.valueOf(36));

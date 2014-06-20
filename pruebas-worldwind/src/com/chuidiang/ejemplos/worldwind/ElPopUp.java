@@ -13,13 +13,14 @@ import java.beans.PropertyChangeListener;
 
 public class ElPopUp extends GlobeAnnotation {
 
+	private static final String IMAGEN_POPUP = "sonar-con-un-barco.jpg";
 	private ToolTipAnnotation tooltip;
 	private static MilStd2525TacticalSymbol objetoSeguido;
 
 	public ElPopUp() {
 		super("", Position.fromDegrees(0.0, 0.0));
 		ImageAnnotation imagen = new ImageAnnotation(
-				"d:/JAVIER/Downloads/sonar-con-un-barco.jpg", 100, 100);
+				IMAGEN_POPUP, 100, 100);
 		imagen.getAttributes().setImageScale(0.3);
 		setLayout(new AnnotationFlowLayout(AVKey.VERTICAL));
 		addChild(imagen);

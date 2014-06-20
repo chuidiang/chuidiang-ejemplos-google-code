@@ -8,21 +8,21 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.VecBuffer;
 
+import java.awt.Color;
 import java.io.File;
 
 public class ShapeFile {
 	private static ShapeAttributes normalAttributes = null;
 
-	public static void addShapefile(String nombreFichero, RenderableLayer layer) {
-		// File file = new
-		// File("C:/Users/JAVIER/Downloads/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp");
+	public static void addShapefile(String nombreFichero,
+			RenderableLayer layer, Color color) {
+
 		File file = new File(nombreFichero);
-		if (null == normalAttributes) {
-			inicializaAttributos();
-		}
+		inicializaAttributos(color);
 		Shapefile shapeFile = new Shapefile(file);
 		while (shapeFile.hasNext()) {
 			// Reading the shapefile current record and storing in a
@@ -31,31 +31,39 @@ public class ShapeFile {
 			String admin = record.getAttributes().getStringValue("ADMIN");
 
 			for (int i = 0; i < record.getNumberOfParts(); i++) {
+				String shapeType = record.getShapeType();
 				VecBuffer vectorBuffer = record.getPointBuffer(i);
-				// Creating an instance of ExtrudedPolygon
-				Polygon polygon = new Polygon();
-				// Setting the polygon outer boundary based on
-				// the current shapefile record
 
-				polygon.setOuterBoundary(vectorBuffer.getPositions());
+				if (shapeFile.SHAPE_POLYLINE.equals(shapeType)) {
+					Polyline polyline = new Polyline();
+					polyline.setColor(color);
+					polyline.setFollowTerrain(true);
+					polyline.setPositions(vectorBuffer.getPositions());
+					polyline.setValue(AVKey.DISPLAY_NAME, admin);
+					layer.addRenderable(polyline);
+				} else if (shapeFile.SHAPE_POLYGON.equals(shapeType)) {
+					Polygon polygon = new Polygon();
+					polygon.setOuterBoundary(vectorBuffer.getPositions());
+					// Setting polygon attributes
+					polygon.setAttributes(normalAttributes);
+					polygon.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+					polygon.setValue(AVKey.DISPLAY_NAME, admin);
 
-				// Setting polygon attributes
-				polygon.setAttributes(normalAttributes);
-				polygon.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-				polygon.setValue(AVKey.DISPLAY_NAME, admin);
-
-				// Attaching the polygon to a layer
-				layer.addRenderable(polygon);
+					// Attaching the polygon to a layer
+					layer.addRenderable(polygon);
+				} else {
+					System.out.println("Descartado " + shapeType);
+				}
 			}
 
 		}
 
 	}
 
-	private static void inicializaAttributos() {
+	private static void inicializaAttributos(Color color) {
 		normalAttributes = new BasicShapeAttributes();
-		normalAttributes.setOutlineMaterial(Material.YELLOW);
-		normalAttributes.setInteriorMaterial(Material.YELLOW);
+		normalAttributes.setOutlineMaterial(new Material(color));
+		normalAttributes.setInteriorMaterial(new Material(color));
 		normalAttributes.setOutlineWidth(2);
 		normalAttributes.setOutlineOpacity(1);
 		normalAttributes.setInteriorOpacity(0.2);
