@@ -61,7 +61,7 @@ public class MainWorlWindExample {
 		});
 
 		addSymbolLayer();
-		addShapeLayer();
+		addShapeLayers();
 		layer.addRenderable(balloon);
 		dibujaPoligonos = new DibujaPoligonos(canvas);
 		// addTiffLayer();
@@ -117,25 +117,27 @@ public class MainWorlWindExample {
 		ApplicationTemplate.insertBeforeCompass(canvas, layerTiff);
 	}
 
-	private void addShapeLayer() {
+	private void addShapeLayers() {
 		RenderableLayer shapeLayer = new RenderableLayer();
 		shapeLayer.setName("Shapefile");
-		// ShapeFile
-		// .addShapefile(
-		// SHAPE_FILE,
-		// shapeLayer);
-		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/spain.shp", shapeLayer,
-				Color.YELLOW);
-		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/es_hiway.shp", shapeLayer,
-				Color.RED);
-		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/es_water.shp", shapeLayer,
-				Color.BLUE);
-
+		ShapeFile.addShapefile(SHAPE_FILE, shapeLayer, Color.YELLOW);
 		ApplicationTemplate.insertBeforeCompass(canvas, shapeLayer);
+		
+		RenderableLayer layerMapinfo = new RenderableLayer();
+		layerMapinfo.setName("MapInfo como Shape");
+		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/spain.shp", layerMapinfo,
+				Color.YELLOW);
+		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/es_hiway.shp", layerMapinfo,
+				Color.RED);
+		ShapeFile.addShapefile("d:/MAPAS/PRUEBAS/es_water.shp", layerMapinfo,
+				Color.BLUE);
+		ApplicationTemplate.insertBeforeCompass(canvas, layerMapinfo);
+		
 	}
 
 	private void addSymbolLayer() {
 		layer = new RenderableLayer();
+		layer.setName("simbologia app6");
 		layer.setPickEnabled(true);
 
 		Iterable<Renderable> simbolos = SimbolosAPP6
@@ -156,10 +158,7 @@ public class MainWorlWindExample {
 
 	private void actualizaDatosPeriodicamente() {
 		new Thread() {
-			private double latitude;
-
 			public void run() {
-				latitude = 52;
 				while (true) {
 					try {
 						Thread.sleep(100);
