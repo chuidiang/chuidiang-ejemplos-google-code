@@ -11,6 +11,7 @@ import gov.nasa.worldwind.layers.ViewControlsSelectListener;
 import gov.nasa.worldwind.util.StatusBar;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
 import gov.nasa.worldwindx.examples.LayerPanel;
+import gov.nasa.worldwindx.examples.util.ToolTipController;
 
 import javax.swing.JFrame;
 
@@ -28,13 +29,23 @@ public class MainMinimo extends JFrame {
       StatusBar statusBar = new StatusBar();
       this.getContentPane().add(statusBar, BorderLayout.PAGE_END);
       statusBar.setEventSource(wwd);
+      
+      new ToolTipController(wwd, AVKey.DISPLAY_NAME, null);
 
       ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
       ApplicationTemplate.insertBeforeCompass(wwd, viewControlsLayer);
       wwd.addSelectListener(new ViewControlsSelectListener(wwd,
             viewControlsLayer));
+      panelCapas.update(wwd);
 
       pintaPoligonos(wwd, panelCapas);
+      pintaIconos(wwd,panelCapas);
+   }
+
+   private void pintaIconos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {
+      CapaIconos capaIconos = new CapaIconos(wwd, panelCapas);
+      capaIconos.pintaIconos();
+      
    }
 
    private void pintaPoligonos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {

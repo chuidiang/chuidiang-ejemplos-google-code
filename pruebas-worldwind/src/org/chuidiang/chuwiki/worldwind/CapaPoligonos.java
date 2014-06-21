@@ -1,5 +1,6 @@
 package org.chuidiang.chuwiki.worldwind;
 
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -16,18 +17,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CapaPoligonos {
-   private WorldWindowGLCanvas canvas;
-   private LayerPanel panelCapas;
+   private WorldWindowGLCanvas wwd;
+   
    private RenderableLayer capa;
 
-   public CapaPoligonos(WorldWindowGLCanvas canvas, LayerPanel panelCapas) {
-      this.canvas = canvas;
-      this.panelCapas = panelCapas;
+   public CapaPoligonos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {
+      this.wwd = wwd;
       
       capa = new RenderableLayer();
       capa.setName("Poligonos");
-      ApplicationTemplate.insertBeforeCompass(canvas, capa);
-      panelCapas.update(canvas);
+      ApplicationTemplate.insertBeforeCompass(wwd, capa);
+      panelCapas.update(wwd);
       
       // Forma alterntiva de añadir la capa.
       // canvas.getModel().getLayers().add(capa);
@@ -44,6 +44,9 @@ public class CapaPoligonos {
       // Los vertices podrian asignarse tambien con poligono.setOuterBoundary()
       // en vez de en el constructor.
       
+      // Alturas relativas a nivel del terreno
+      // poligono.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+      
       ShapeAttributes atributos = new BasicShapeAttributes();
       atributos.setOutlineMaterial(Material.RED);
       atributos.setInteriorMaterial(Material.RED);
@@ -51,7 +54,7 @@ public class CapaPoligonos {
       poligono.setAttributes(atributos);
       
       capa.addRenderable(poligono);
-      canvas.redraw();
+      wwd.redraw();
    }
    
    public void pintaPoligonoExtruido(){
@@ -72,7 +75,7 @@ public class CapaPoligonos {
       poligono.setAttributes(atributos);
       
       capa.addRenderable(poligono);
-      canvas.redraw();
+      wwd.redraw();
    }
    
    public void pintaPoligonoSuperficie(){
@@ -93,7 +96,7 @@ public class CapaPoligonos {
       poligono.setAttributes(atributos);
       
       capa.addRenderable(poligono);
-      canvas.redraw();
+      wwd.redraw();
       
    }
 
