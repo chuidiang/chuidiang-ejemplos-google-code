@@ -31,7 +31,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 public class MainWorlWindExample {
-	private static final String SHAPE_FILE = "D:/MAPAS/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp";
+	private static final String SHAPE_FILE = "files/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp";
 	private static final int NUM_TRAZAS_POR_SENSORA = 10;
 	private static final int NUM_SIMBOLOS_APP6 = 10;
 	private static double[][] sensoras = { { 35.0, -1.0 }, { 38.0, -4.0 },

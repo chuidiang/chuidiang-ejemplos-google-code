@@ -1,4 +1,4 @@
-package com.chuidiang.ejemplos.worldwind;
+package org.chuidiang.chuwiki.worldwind;
 
 import java.awt.BorderLayout;
 
