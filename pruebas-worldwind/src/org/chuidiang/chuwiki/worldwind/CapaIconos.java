@@ -18,8 +18,12 @@ public class CapaIconos {
    private final double LONGITUD_INICIAL = -3.25;
    private final double MAXIMO_DESPLAZAMIENTO = 0.1;
 
-   private String iconos[] = { "64.png", "642.png", "643.png", "644.png",
-         "645.png", "red_64.png", "yellow_64.png" };
+   private String iconos[] = { "Status-weather-clear-icon.png",
+         "Status-weather-clouds-icon.png",
+         "Status-weather-showers-scattered-day-icon.png",
+         "Status-weather-showers-scattered-icon.png",
+         "Status-weather-storm-night-icon.png"
+ };
 
    public CapaIconos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {
       this.wwd = wwd;
@@ -33,13 +37,13 @@ public class CapaIconos {
    public void pintaIconos() {
       for (String icono : iconos) {
 
-         UserFacingIcon userIcon = new UserFacingIcon("files/coches/"
+         UserFacingIcon userIcon = new UserFacingIcon("files/forecast/"
                + icono, Position.fromDegrees(LATITUD_INICIAL + Math.random()
                * MAXIMO_DESPLAZAMIENTO - (MAXIMO_DESPLAZAMIENTO / 2.0),
                LONGITUD_INICIAL + Math.random() * MAXIMO_DESPLAZAMIENTO
                      - (MAXIMO_DESPLAZAMIENTO / 2.0)));
          userIcon.setSize(new Dimension(64, 64));
-         userIcon.setValue(AVKey.DISPLAY_NAME, "un coche");
+         userIcon.setValue(AVKey.DISPLAY_NAME, "el tiempo");
          capa.addIcon(userIcon);
       }
       wwd.redraw();
