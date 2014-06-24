@@ -40,6 +40,9 @@ public class MainMinimo extends JFrame {
 
       pintaPoligonos(wwd, panelCapas);
       pintaIconos(wwd,panelCapas);
+      
+      CapaWMS capaWms =new CapaWMS();
+      capaWms.anadeUrl("http://localhost:8080/geoserver/wms", wwd, panelCapas);
    }
 
    private void pintaIconos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {
