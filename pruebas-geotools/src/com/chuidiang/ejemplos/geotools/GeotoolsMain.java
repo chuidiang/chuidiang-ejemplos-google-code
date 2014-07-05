@@ -48,13 +48,14 @@ public class GeotoolsMain {
       style=SLD.createPolygonStyle(Color.BLACK, Color.YELLOW, 0.2f);
       
       MapContent map = new MapContent();
-      map.setTitle("Quickstart");
 
       Layer layer = new FeatureLayer(featureSource, style);
+      layer.setTitle("mundo");
       map.addLayer(layer);
       
       CollectionFeatureSource propias = createFeatureType();
       Layer layer2 = new FeatureLayer(propias, SLD.createPolygonStyle(Color.RED, Color.GREEN, 0.2f));
+      layer2.setTitle("rectangulo");
       map.addLayer(layer2);
 
       // La siguiente linea dibuja un JFrame con el mapa y toda una
@@ -71,10 +72,14 @@ public class GeotoolsMain {
       toolBar.add(new ZoomOutAction(pane));
       toolBar.add(new PanAction(pane));
       toolBar.add(new ResetAction(pane));
+      
+      PanelCapas panelCapas = new PanelCapas(new Layer[]{layer,layer2});
+      
 
       JFrame ventana = new JFrame("mapa");
       ventana.getContentPane().add(pane);
       ventana.getContentPane().add(toolBar, BorderLayout.NORTH);
+      ventana.getContentPane().add(panelCapas, BorderLayout.SOUTH);
 
       ventana.setSize(500, 500);
       ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
