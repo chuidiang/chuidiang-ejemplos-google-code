@@ -26,6 +26,7 @@ public class GeotoolsMain {
 
    public static void main(String[] args) throws IOException {
       // display a data store file chooser dialog for shapefiles
+      // Puedes descargar el fichero de http://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/
       File file = new File(
             "files/ne_10m_admin_0_countries/ne_10m_admin_0_countries.shp");
 
