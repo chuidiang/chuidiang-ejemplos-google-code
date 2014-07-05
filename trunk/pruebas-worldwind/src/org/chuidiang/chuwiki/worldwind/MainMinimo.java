@@ -29,7 +29,7 @@ public class MainMinimo extends JFrame {
       StatusBar statusBar = new StatusBar();
       this.getContentPane().add(statusBar, BorderLayout.PAGE_END);
       statusBar.setEventSource(wwd);
-      
+
       new ToolTipController(wwd, AVKey.DISPLAY_NAME, null);
 
       ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
@@ -39,16 +39,16 @@ public class MainMinimo extends JFrame {
       panelCapas.update(wwd);
 
       pintaPoligonos(wwd, panelCapas);
-      pintaIconos(wwd,panelCapas);
-      
-      CapaWMS capaWms =new CapaWMS();
+      pintaIconos(wwd, panelCapas);
+
+      CapaWMS capaWms = new CapaWMS();
       capaWms.anadeUrl("http://localhost:8080/geoserver/wms", wwd, panelCapas);
    }
 
    private void pintaIconos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {
       CapaIconos capaIconos = new CapaIconos(wwd, panelCapas);
       capaIconos.pintaIconos();
-      
+
    }
 
    private void pintaPoligonos(WorldWindowGLCanvas wwd, LayerPanel panelCapas) {
