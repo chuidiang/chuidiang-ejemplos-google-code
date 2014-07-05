@@ -1,13 +1,8 @@
 package org.chuidiang.chuwiki.worldwind;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Set;
-
 import gov.nasa.worldwind.Factory;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.avlist.AVListImpl;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.layers.Layer;
@@ -17,6 +12,10 @@ import gov.nasa.worldwind.ogc.wms.WMSLayerStyle;
 import gov.nasa.worldwind.wms.WMSTiledImageLayer;
 import gov.nasa.worldwindx.examples.ApplicationTemplate;
 import gov.nasa.worldwindx.examples.LayerPanel;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Set;
 
 public class CapaWMS {
    private WMSTiledImageLayer capa;
@@ -30,14 +29,19 @@ public class CapaWMS {
       try {
          WMSCapabilities capabilities = WMSCapabilities.retrieve(new URI(url));
          capabilities.parse();
-         List<WMSLayerCapabilities> listaCapacidadesCapa = capabilities
+         List<WMSLayerCapabilities> listaCapas = capabilities
                .getNamedLayers();
-         for (WMSLayerCapabilities capacidadesCapa : listaCapacidadesCapa) {
+         for (WMSLayerCapabilities unaCapa : listaCapas) {
 
             AVListImpl params = new AVListImpl();
-            params.setValue(AVKey.LAYER_NAMES, capacidadesCapa.getName());
-            Set<WMSLayerStyle> estilos = capacidadesCapa.getStyles();
-
+            params.setValue(AVKey.LAYER_NAMES, unaCapa.getName());
+            
+            System.out.println(unaCapa.getName());
+            System.out.println(unaCapa.getLayerAbstract());
+            System.out.println(unaCapa.getTitle());
+            System.out.println("----------");
+            
+            Set<WMSLayerStyle> estilos = unaCapa.getStyles();
             // Codigo si queremos aplicar un estilo concreto en vez de el estilo
             // por defecto.
             // if (null != estilos){
