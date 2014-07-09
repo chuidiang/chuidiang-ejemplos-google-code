@@ -15,7 +15,7 @@ public class PanelCapas extends JPanel{
 		super(new FlowLayout());
 		
 		for (Layer layer : layers) {
-			JCheckBox checkBox = new JCheckBox(layer.getTitle());
+			JCheckBox checkBox = new JCheckBox(layer.getTitle(),layer.isVisible());
 			checkBox.addActionListener(new LayerListener(layer));
 			add(checkBox);
 		}
