@@ -32,6 +32,21 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
+/**
+ * Prueba de Geotools. 
+ * Necesitas los jar de geotools gt-swing-10.7.jar,
+ * gt-shapefile-10.7.jar y gt-epsg-hsql-10.7.jar con todo
+ * de lo que dependen estas.
+ * 
+ * En el path ficheros/ne_10m_admin_0_countries hay que poner
+ * los ficheros de mapa que se pueden bajar de 
+ * http://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-countries/
+ * Aunque el codigo solo menciona el shapefile, hay que colocar en ese directorio todos
+ * los demas ficheros que vienen en el zip.
+ * 
+ * @author chuidiang
+ *
+ */
 public class GeotoolsMain {
 
    public static void main(String[] args) throws IOException {
