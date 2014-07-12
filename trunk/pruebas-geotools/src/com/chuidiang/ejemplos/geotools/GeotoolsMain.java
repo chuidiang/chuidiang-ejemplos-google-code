@@ -19,6 +19,8 @@ import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
+import org.geotools.map.event.MapLayerListEvent;
+import org.geotools.map.event.MapLayerListListener;
 import org.geotools.styling.SLD;
 import org.geotools.styling.Style;
 import org.geotools.swing.JMapPane;
@@ -26,6 +28,8 @@ import org.geotools.swing.action.PanAction;
 import org.geotools.swing.action.ResetAction;
 import org.geotools.swing.action.ZoomInAction;
 import org.geotools.swing.action.ZoomOutAction;
+import org.geotools.swing.event.MapMouseEvent;
+import org.geotools.swing.event.MapMouseListener;
 import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -72,7 +76,8 @@ public class GeotoolsMain {
       Layer layer2 = new FeatureLayer(propias, SLD.createPolygonStyle(Color.RED, Color.GREEN, 0.2f));
       layer2.setTitle("rectangulo");
       map.addLayer(layer2);
-
+      
+      
       // La siguiente linea dibuja un JFrame con el mapa y toda una
       // botoneria por defecto. Si llamamos a esta linea, el resto
       // de código sobra.
@@ -81,6 +86,8 @@ public class GeotoolsMain {
       // Como no hemos llamado a la linea anterior, vamos a construir el
       // JFrame y todos los botones.
       JMapPane pane = new JMapPane(map);
+      
+      MouseWheel.initZoomWithMouseWheel(pane);
 
       JToolBar toolBar = new JToolBar();
       toolBar.add(new ZoomInAction(pane));
