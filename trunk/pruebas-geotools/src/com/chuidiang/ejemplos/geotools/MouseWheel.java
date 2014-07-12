@@ -1,5 +1,7 @@
 package com.chuidiang.ejemplos.geotools;
 
+import javax.swing.SwingUtilities;
+
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.swing.JMapPane;
 import org.geotools.swing.event.MapMouseEvent;
@@ -24,7 +26,15 @@ public class MouseWheel {
             
             env.expandBy(delta);
             MouseWheel.pane.setDisplayArea(env);
-            MouseWheel.pane.repaint();
+            SwingUtilities.invokeLater(new Runnable() {
+               
+               @Override
+               public void run() {
+                  MouseWheel.pane.repaint();
+                  
+               }
+            });
+            
          }
          
          @Override

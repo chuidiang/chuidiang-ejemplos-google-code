@@ -12,6 +12,7 @@ import org.geotools.data.FileDataStore;
 import org.geotools.data.FileDataStoreFinder;
 import org.geotools.data.collection.CollectionFeatureSource;
 import org.geotools.data.memory.MemoryFeatureCollection;
+import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
@@ -96,7 +97,6 @@ public class GeotoolsMain {
       toolBar.add(new ResetAction(pane));
       
       PanelCapas panelCapas = new PanelCapas(new Layer[]{layer,layer2});
-      
 
       JFrame ventana = new JFrame("mapa");
       ventana.getContentPane().add(pane);
