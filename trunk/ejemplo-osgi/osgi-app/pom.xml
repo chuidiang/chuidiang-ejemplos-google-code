@@ -44,6 +44,10 @@
   <modules>
     <module>poms</module>
     <module>provision</module>
+    <module>com.chuidiang.ejemplos.plugin1_v1</module>
+    <module>com.chuidiang.ejemplos.plugin1_v2</module>
+    <module>com.chuidiang.ejemplos.plugin2</module>
+    <module>com.chuidiang.ejemplos.app_main</module>
   </modules>
 
   <build>
@@ -64,7 +68,7 @@
           <!--
            | uncomment to auto-generate IDE files
           <execution>
-            <id>ide-support</id>
+            id>ide-support</id>
             <goals>
               <goal>eclipse</goal>
             </goals>
