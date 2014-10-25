@@ -34,5 +34,22 @@ public final class ExampleServiceImpl
 
         return new String( mixedChars );
     }
+    
+    public void start(){
+       System.out.println("app-main starting");
+    }
+    
+    public void stop(){
+       System.out.println("app-main stoping");
+    }
+    
+    public void addPlugin(com.chuidiang.ejemplos.plugin1.ExampleService plugin){
+       System.out.println("plugin1 added");
+    }
+    
+    public void removePlugin(com.chuidiang.ejemplos.plugin1.ExampleService plugin){
+       System.out.println("plugin1 removed");
+    }
+
 }
 

@@ -23,8 +23,7 @@
   <packaging>bundle</packaging>
 
   <dependencies>
-    <!--
-     | uncomment to add all imported (non-local) bundles to your compilation classpath
+  <!-- 
     <dependency>
       <type>pom</type>
       <groupId>${parent.groupId}</groupId>
@@ -41,6 +40,11 @@
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_compendium</artifactId>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+    	<groupId>com.chuidiang.ejemplos.osgi-app</groupId>
+    	<artifactId>com.chuidiang.ejemplos.plugin1</artifactId>
+    	<version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 

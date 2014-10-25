@@ -7,6 +7,6 @@ public interface ExampleService
 {
     // public methods go here...
 
-    String scramble( String text );
+    String scramble( String text ); 
 }
 
