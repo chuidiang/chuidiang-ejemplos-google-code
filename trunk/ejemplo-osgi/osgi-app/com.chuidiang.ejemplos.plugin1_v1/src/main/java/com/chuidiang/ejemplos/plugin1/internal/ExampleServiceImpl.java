@@ -1,46 +1,23 @@
 package com.chuidiang.ejemplos.plugin1.internal;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import com.chuidiang.ejemplos.plugin1.ExampleService;
+import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 
 /**
  * Internal implementation of our example OSGi service
  */
-public final class ExampleServiceImpl
-    implements ExampleService
-{
-    // implementation methods go here...
+public final class ExampleServiceImpl implements PluginInterface {
 
-    public String scramble( String text )
-    {
-        List charList = new ArrayList();
+   public void start() {
+      System.out.println("plugin1 starting");
+   }
 
-        char[] textChars = text.toCharArray();
-        for( int i = 0; i < textChars.length; i++ )
-        {
-            charList.add( new Character( textChars[i] ) );
-        }
+   public void stop() {
+      System.out.println("plugin1 stoping");
+   }
 
-        Collections.shuffle( charList );
-
-        char[] mixedChars = new char[text.length()];
-        for( int i = 0; i < mixedChars.length; i++ )
-        {
-            mixedChars[i] = ( (Character) charList.get( i ) ).charValue();
-        }
-
-        return new String( mixedChars );
-    }
-    
-    public void start(){
-       System.out.println("plugin1 starting");
-    }
-    public void stop(){
-       System.out.println("plugin1 stoping");
-    }
-
+   @Override
+   public String getName() {
+      // TODO Auto-generated method stub
+      return "I'm plugin1, version 1";
+   }
 }
-

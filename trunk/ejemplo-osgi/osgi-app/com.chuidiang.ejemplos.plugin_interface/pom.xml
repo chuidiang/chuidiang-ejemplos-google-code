@@ -9,13 +9,13 @@
   </parent>
 
   <properties>
-    <bundle.symbolicName>com.chuidiang.ejemplos.app_main</bundle.symbolicName>
-    <bundle.namespace>com.chuidiang.ejemplos.app_main</bundle.namespace>
+    <bundle.symbolicName>com.chuidiang.ejemplos.plugin_interface</bundle.symbolicName>
+    <bundle.namespace>com.chuidiang.ejemplos.plugin_interface</bundle.namespace>
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.chuidiang.ejemplos.osgi-app</groupId>
-  <artifactId>com.chuidiang.ejemplos.app_main</artifactId>
+  <artifactId>com.chuidiang.ejemplos.plugin_interface</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <name>${bundle.symbolicName}</name>
@@ -23,7 +23,8 @@
   <packaging>bundle</packaging>
 
   <dependencies>
-  <!-- 
+    <!--
+     | uncomment to add all imported (non-local) bundles to your compilation classpath
     <dependency>
       <type>pom</type>
       <groupId>${parent.groupId}</groupId>
@@ -41,11 +42,6 @@
       <artifactId>osgi_R4_compendium</artifactId>
       <optional>true</optional>
     </dependency>
-    <dependency>
-    	<groupId>com.chuidiang.ejemplos.osgi-app</groupId>
-    	<artifactId>com.chuidiang.ejemplos.plugin_interface</artifactId>
-    	<version>1.0-SNAPSHOT</version>
-    </dependency>
   </dependencies>
-	
+
 </project>

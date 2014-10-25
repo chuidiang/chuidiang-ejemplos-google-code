@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+	activate="start" immediate="true" deactivate="stop" name="plugin">
+	<implementation
+		class="com.chuidiang.ejemplos.plugin1.internal.ExampleServiceImpl" />
+	<service>
+		<provide interface="com.chuidiang.ejemplos.plugin_interface.PluginInterface" />
+	</service>
+</scr:component>

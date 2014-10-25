@@ -48,6 +48,7 @@
     <module>com.chuidiang.ejemplos.plugin1_v2</module>
     <module>com.chuidiang.ejemplos.plugin2</module>
     <module>com.chuidiang.ejemplos.app_main</module>
+    <module>com.chuidiang.ejemplos.plugin_interface</module>
   </modules>
 
   <build>
@@ -75,6 +76,15 @@
           </execution>
           -->
         </executions>
+</plugin>
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.2</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
       </plugin>
     </plugins>
   </build>

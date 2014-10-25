@@ -2,4 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="start"  immediate="true"
 	deactivate="stop" name="app-main">
    <implementation class="com.chuidiang.ejemplos.app_main.internal.ExampleServiceImpl"/>
+   <reference cardinality="0..n" interface="com.chuidiang.ejemplos.plugin_interface.PluginInterface" 
+  		policy="dynamic" bind="addPlugin" unbind="removePlugin"/>
 </scr:component>
