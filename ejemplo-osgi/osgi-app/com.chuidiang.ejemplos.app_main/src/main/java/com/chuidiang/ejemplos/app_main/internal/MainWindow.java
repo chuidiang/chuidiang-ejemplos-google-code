@@ -10,14 +10,14 @@ import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 public class MainWindow {
    private JFrame window;
    private JTabbedPane tabbedPane;
-   public MainWindow(ExampleServiceImpl exampleServiceImpl) {
+   public MainWindow(final ExampleServiceImpl exampleServiceImpl) {
          SwingUtilities.invokeLater(new Runnable() {
             
             @Override
             public void run() {
                window = new JFrame("Main application");
                tabbedPane = new JTabbedPane();
-               tabbedPane.add("main",new JLabel("La primera"));
+               tabbedPane.add("main",new MainPanel(exampleServiceImpl));
                window.getContentPane().add(tabbedPane);
                window.pack();
                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
