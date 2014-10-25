@@ -3,4 +3,5 @@
 #-----------------------------------------------------------------
 
 Service-Component: OSGI-INF/component.xml
-Created-By: El Chuidiang jugando
+Import-Package: com.chuidiang.ejemplos.plugin_interface;version="1.0.0.SNAPSHOT"
+
