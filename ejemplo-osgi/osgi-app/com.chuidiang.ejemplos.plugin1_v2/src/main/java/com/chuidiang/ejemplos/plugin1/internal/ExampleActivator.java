@@ -38,7 +38,7 @@ public final class ExampleActivator
         throws Exception
     {
         System.out.println( "STOPPING com.chuidiang.ejemplos.plugin1_v2" );
-
+        
         // no need to unregister our service - the OSGi framework handles it for us
     }
 }

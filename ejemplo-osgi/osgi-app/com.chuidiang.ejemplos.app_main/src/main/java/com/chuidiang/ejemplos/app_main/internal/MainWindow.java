@@ -10,7 +10,7 @@ import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 public class MainWindow {
    private JFrame window;
    private JTabbedPane tabbedPane;
-   public MainWindow() {
+   public MainWindow(ExampleServiceImpl exampleServiceImpl) {
          SwingUtilities.invokeLater(new Runnable() {
             
             @Override
