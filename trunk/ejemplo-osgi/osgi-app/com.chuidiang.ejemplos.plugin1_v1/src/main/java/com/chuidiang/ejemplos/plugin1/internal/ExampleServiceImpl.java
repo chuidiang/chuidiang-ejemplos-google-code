@@ -34,5 +34,13 @@ public final class ExampleServiceImpl
 
         return new String( mixedChars );
     }
+    
+    public void start(){
+       System.out.println("plugin1 starting");
+    }
+    public void stop(){
+       System.out.println("plugin1 stoping");
+    }
+
 }
 
