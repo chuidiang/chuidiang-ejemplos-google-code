@@ -3,6 +3,7 @@ package com.chuidiang.ejemplos.app_main.internal;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
@@ -68,13 +69,16 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 	}
 
 	@Override
-	public void installPlugin(String path) {
+	public boolean installPlugin(String path) {
 		try {
-			bc.installBundle(path);
+			Bundle bundle = bc.installBundle(path);
+			if (null!=bundle){
+			   return true;
+			}
 		} catch (Exception e){
 			System.err.println(e);
 		}
-		
+		return false;
 	}
 
 }
