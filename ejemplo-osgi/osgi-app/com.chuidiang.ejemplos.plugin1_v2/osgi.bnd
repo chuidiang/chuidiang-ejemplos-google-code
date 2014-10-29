@@ -2,4 +2,6 @@
 # Use this file to add customized Bnd instructions for the bundle
 #-----------------------------------------------------------------
 
-Import-Package: com.chuidiang.ejemplos.plugin_interface;version="1.0-SNAPSHOT",org.osgi.framework
+Import-Package: com.chuidiang.ejemplos.plugin_interface;version="1.0-SNAPSHOT",\
+ org.osgi.framework,javax.swing
+Service-Component: OSGI-INF/component.xml
