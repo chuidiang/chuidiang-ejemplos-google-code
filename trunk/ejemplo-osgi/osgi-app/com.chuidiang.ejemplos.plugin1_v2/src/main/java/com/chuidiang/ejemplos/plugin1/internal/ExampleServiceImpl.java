@@ -1,38 +1,62 @@
 package com.chuidiang.ejemplos.plugin1.internal;
 
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import com.chuidiang.ejemplos.plugin1.ExampleService;
+import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 
 /**
  * Internal implementation of our example OSGi service
  */
 public final class ExampleServiceImpl
-    implements ExampleService
+    implements PluginInterface
 {
-    // implementation methods go here...
+   private JPanel panel;
+   private JButton button;
+   private JLabel label;
+   private int counter=0;
+   public void start() {
 
-    public String scramble( String text )
-    {
-        List charList = new ArrayList();
+      System.out.println("plugin1 v2 starting");
+      panel = new JPanel(new FlowLayout());
+      button = new JButton("Click me");
+      panel.add(button);
+      label = new JLabel(Integer.toString(counter));
+      panel.add(label);
+      button.addActionListener(new ActionListener() {
+         
+         @Override
+         public void actionPerformed(ActionEvent arg0) {
+            counter++;
+            counter++; // v2 increments twice.
+            label.setText(Integer.toString(counter));
+            
+         }
+      });
+   }
 
-        char[] textChars = text.toCharArray();
-        for( int i = 0; i < textChars.length; i++ )
-        {
-            charList.add( new Character( textChars[i] ) );
-        }
+   public void stop() {
+      System.out.println("plugin1 v2 stopping");
+   }
 
-        Collections.shuffle( charList );
+   @Override
+   public String getName() {
+      return "I'm plugin1, version 2";
+   }
 
-        char[] mixedChars = new char[text.length()];
-        for( int i = 0; i < mixedChars.length; i++ )
-        {
-            mixedChars[i] = ( (Character) charList.get( i ) ).charValue();
-        }
-
-        return new String( mixedChars );
-    }
+   @Override
+   public Component getComponent() {
+      return panel;
+   }
 }
 

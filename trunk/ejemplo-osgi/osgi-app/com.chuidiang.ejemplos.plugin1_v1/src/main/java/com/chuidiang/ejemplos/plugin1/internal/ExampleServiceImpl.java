@@ -22,7 +22,7 @@ public final class ExampleServiceImpl implements PluginInterface {
    private int counter=0;
    public void start() {
 
-      System.out.println("plugin1 starting");
+      System.out.println("plugin1 v1 starting");
       panel = new JPanel(new FlowLayout());
       button = new JButton("Click me");
       panel.add(button);
@@ -40,7 +40,7 @@ public final class ExampleServiceImpl implements PluginInterface {
    }
 
    public void stop() {
-      System.out.println("plugin1 stoping");
+      System.out.println("plugin1 v1 stoping");
    }
 
    @Override
