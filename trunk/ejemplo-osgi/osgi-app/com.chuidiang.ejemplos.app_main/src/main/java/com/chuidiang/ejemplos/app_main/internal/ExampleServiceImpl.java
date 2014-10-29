@@ -73,6 +73,7 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 		try {
 			Bundle bundle = bc.installBundle(path);
 			if (null!=bundle){
+			   bundle.start();
 			   return true;
 			}
 		} catch (Exception e){
