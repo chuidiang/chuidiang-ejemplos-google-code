@@ -4,15 +4,11 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.chuidiang.ejemplos.plugin1.ExampleService;
 import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 
 /**
