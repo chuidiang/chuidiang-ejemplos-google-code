@@ -2,6 +2,7 @@ package com.chuidiang.ejemplos.app_main.internal;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -46,7 +47,7 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 	}
 
 	@Override
-	public void addPlugin(PluginInterface plugin) {
+	public void addPlugin(PluginInterface plugin, Map properties) {
 		System.out.println("Plugin added");
 		if (null == mainWindow) {
 			synchronized (plugins) {

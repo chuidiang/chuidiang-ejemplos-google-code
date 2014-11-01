@@ -1,5 +1,7 @@
 package com.chuidiang.ejemplos.app_main;
 
+import java.util.Map;
+
 import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 
 /**
@@ -7,7 +9,7 @@ import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
  */
 public interface ApplicationMain
 {
-   void addPlugin(PluginInterface plugin);
+   void addPlugin(PluginInterface plugin, Map properties);
    void removePlugin(PluginInterface plugin);
 }
 
