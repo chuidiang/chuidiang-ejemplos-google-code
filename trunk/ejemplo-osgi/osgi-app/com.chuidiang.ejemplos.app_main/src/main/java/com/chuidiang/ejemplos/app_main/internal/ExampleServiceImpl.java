@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.BundleException;
 
 import com.chuidiang.ejemplos.app_main.ApplicationMain;
 import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
@@ -17,7 +17,6 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 
 	private List<PluginInterface> plugins = new LinkedList<>();
 	private MainWindow mainWindow = null;
-	private FrameworkUtil configAdmin;
 	private BundleContext bc;
 
 	public void start(BundleContext bc) {
@@ -31,12 +30,19 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 			}
 			plugins.clear();
 		}
-		
-		
 	}
 
+	public void exit(){
+	   try {
+         bc.getBundle(0).stop();
+      } catch (BundleException e) {
+         System.err.println("Framework can't be stopped"+e);
+         
+      }
+	}
 	public void stop() {
 		System.out.println("app-main stoping");
+		mainWindow.exit();
 	}
 
 	@Override

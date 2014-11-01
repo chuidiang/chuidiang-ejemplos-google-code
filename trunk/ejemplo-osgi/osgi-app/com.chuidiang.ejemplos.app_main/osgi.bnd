@@ -3,5 +3,6 @@
 #-----------------------------------------------------------------
 
 Service-Component: OSGI-INF/component.xml
-Import-Package: com.chuidiang.ejemplos.plugin_interface;version="1.0.0.SNAPSHOT",javax.swing,org.osgi.framework
+Import-Package: com.chuidiang.ejemplos.plugin_interface;version="1.0.0.SNAPSHOT",\
+ javax.swing,org.osgi.framework
 
