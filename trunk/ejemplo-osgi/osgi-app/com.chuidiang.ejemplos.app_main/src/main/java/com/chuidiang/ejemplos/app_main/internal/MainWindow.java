@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-import org.osgi.framework.FrameworkUtil;
-
 import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 
 public class MainWindow {
@@ -39,13 +37,14 @@ public class MainWindow {
          });
    }
    
-   public void addPlugin(final PluginInterface plugin) {
+   public void addPlugin(final BundleAndMap plugin) {
       System.out.println("Adding pane");
       SwingUtilities.invokeLater(new Runnable() {
          
          @Override
          public void run() {
-            tabbedPane.add(plugin.getName(),plugin.getComponent());
+            tabbedPane.add(plugin.pluginProperties.get("component.name").toString(),
+                  plugin.plugin.getComponent());
             
          }
       });

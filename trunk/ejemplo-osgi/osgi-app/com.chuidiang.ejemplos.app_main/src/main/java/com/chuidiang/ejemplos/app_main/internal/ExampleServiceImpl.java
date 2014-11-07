@@ -16,17 +16,17 @@ import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
  */
 public final class ExampleServiceImpl implements ApplicationMain, PluginInstallation {
 
-	private List<PluginInterface> plugins = new LinkedList<>();
+	private List<BundleAndMap> plugins = new LinkedList<>();
 	private MainWindow mainWindow = null;
 	private BundleContext bc;
 
-	public void start(BundleContext bc) {
+	public void start(BundleContext bc, Map properties) {
 		this.bc = bc;
-		System.out.println("app-main starting");
+		System.out.println("app-main starting "+properties);
 		mainWindow = new MainWindow(this);
 		synchronized (plugins) {
 
-			for (PluginInterface plugin : plugins) {
+			for (BundleAndMap plugin : plugins) {
 				mainWindow.addPlugin(plugin);
 			}
 			plugins.clear();
@@ -52,22 +52,22 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 		if (null == mainWindow) {
 			synchronized (plugins) {
 				System.out.println("plugin added to list");
-				plugins.add(plugin);
+				plugins.add(new BundleAndMap(plugin, properties));
 			}
 
 		} else {
 			System.out.println("pluggin added to mainwindow");
-			mainWindow.addPlugin(plugin);
+			mainWindow.addPlugin(new BundleAndMap(plugin, properties));
 		}
 
 	}
 
 	@Override
-	public void removePlugin(PluginInterface plugin) {
+	public void removePlugin(PluginInterface plugin, Map properties) {
 		System.out.println("Plugin removed");
 		if (null == mainWindow) {
 			synchronized (plugins) {
-				plugins.add(plugin);
+				plugins.add(new BundleAndMap(plugin, properties));
 			}
 		} else {
 			mainWindow.removePlugin(plugin);
@@ -76,17 +76,29 @@ public final class ExampleServiceImpl implements ApplicationMain, PluginInstalla
 	}
 
 	@Override
-	public boolean installPlugin(String path) {
+	public long installPlugin(String path) {
 		try {
 			Bundle bundle = bc.installBundle(path);
 			if (null!=bundle){
 			   bundle.start();
-			   return true;
+			   return bundle.getBundleId();
+			   
 			}
 		} catch (Exception e){
 			System.err.println(e);
 		}
-		return false;
+		return -1;
 	}
+
+   @Override
+   public void uninstall(long bundleId) {
+      try {
+//         bc.getBundle(bundleId).stop();
+         bc.getBundle(bundleId).uninstall();
+      } catch (BundleException e) {
+         System.err.println("Bundle can't be uninstalled "+e.getMessage());
+      }
+      
+   }
 
 }
