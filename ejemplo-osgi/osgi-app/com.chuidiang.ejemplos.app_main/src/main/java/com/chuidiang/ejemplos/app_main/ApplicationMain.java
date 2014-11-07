@@ -10,6 +10,6 @@ import com.chuidiang.ejemplos.plugin_interface.PluginInterface;
 public interface ApplicationMain
 {
    void addPlugin(PluginInterface plugin, Map properties);
-   void removePlugin(PluginInterface plugin);
+   void removePlugin(PluginInterface plugin, Map properties);
 }
 
