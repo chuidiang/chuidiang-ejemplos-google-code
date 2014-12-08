@@ -1,5 +1,5 @@
 package com.chuidiang.ejemplos.api;
 
-public interface ThePublicInterface {
+public interface ThePublicInterface  {
 	void someMethod();
 }

@@ -22,7 +22,7 @@
 			<resource>
 				<directory>.</directory>
 				<includes>
-					<include>plugin.xml</include>
+					<include>OSGI-INF/*</include>
 				</includes>
 			</resource>
 		</resources>
@@ -40,6 +40,7 @@
 						<Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
 						<Embed-Directory>target/dependency</Embed-Directory>
 						<Embed-StripGroup>true</Embed-StripGroup>
+						<Service-Component>OSGI-INF/ThePublicInterface.xml</Service-Component>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -51,19 +52,6 @@
 						<phase>package</phase>
 						<goals>
 							<goal>copy-dependencies</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-scr-plugin</artifactId>
-				<version>1.15.0</version>
-				<executions>
-					<execution>
-						<id>generate-scr-scrdescriptor</id>
-						<goals>
-							<goal>scr</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -84,12 +72,6 @@
 			<version>1.0</version>
 			<scope>provided</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.apache.felix.scr.annotations</artifactId>
-			<version>1.9.8</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

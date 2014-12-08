@@ -7,11 +7,11 @@ import org.osgi.framework.BundleContext;
 public class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext bc){
-		System.out.println("Starting ...");
+		System.out.println("Activator Starting ...");
 	}
 	
 	@Override
 	public void stop(BundleContext bc) {
-		System.out.println("Stopping ...");
+		System.out.println("Activator Stopping ...");
 	}
 }
