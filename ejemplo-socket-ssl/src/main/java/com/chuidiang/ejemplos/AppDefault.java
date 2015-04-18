@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Example with SSL sockets using system properties.
  */
-public class App {
+public class AppDefault {
    public static void main(String[] args) throws IOException {
       System.setProperty("javax.net.ssl.keyStore", "src/main/certs/server/serverKey.jks");
       System.setProperty("javax.net.ssl.keyStorePassword","servpass");
