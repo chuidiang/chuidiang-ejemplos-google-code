@@ -8,11 +8,14 @@ import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-public class Consumer {
+public class QueueConsumer {
    private MessageConsumer consumer;
    private Session session;
+   private static int globalConsumerCounter=1;
+   private int consumerNumber;
 
-   public Consumer(Connection connection, String queue) throws JMSException {
+   public QueueConsumer(Connection connection, String queue) throws JMSException {
+      consumerNumber  = globalConsumerCounter++;
       session = connection.createSession(false,
             Session.AUTO_ACKNOWLEDGE);
 
@@ -33,12 +36,12 @@ public class Consumer {
          if (message instanceof TextMessage) {
             TextMessage textMessage = (TextMessage) message;
             String text = textMessage.getText();
-            System.out.println("Received: " + text);
+            System.out.println(consumerNumber + " received: " + text);
          } else {
-            System.out.println("Received: " + message);
+            System.out.println(consumerNumber + " received: " + message);
          }
       }
-      System.out.println("Finishing...");
+      System.out.println(consumerNumber+" ended");
    }
 
    public void close() throws JMSException {

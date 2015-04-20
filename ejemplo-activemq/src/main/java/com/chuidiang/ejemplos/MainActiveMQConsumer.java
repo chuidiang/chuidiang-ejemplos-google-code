@@ -10,12 +10,31 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.network.NetworkConnector;
+import org.apache.activemq.util.ServiceStopper;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 public class MainActiveMQConsumer {
 
 	public static void main(String[] args) throws Exception {
+	   BasicConfigurator.configure();
+	   Logger.getRootLogger().setLevel(Level.INFO);
+      BrokerService brokerService = new BrokerService();
+      brokerService.setBrokerName("consumer");
+      brokerService.addConnector("tcp://localhost:61616");
+      NetworkConnector connector = brokerService.addNetworkConnector("static://tcp://localhost:61617");
+      connector.setDuplex(true);
+      brokerService.setPersistent(false);
+      brokerService.start();
+
+	   
+	   
+	   
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-				"nio://localhost:61616");
+				"tcp://localhost:61616");
 
 		// Create a Connection
 		Connection connection = connectionFactory.createConnection();
@@ -58,6 +77,8 @@ public class MainActiveMQConsumer {
 		consumer.close();
 		session.close();
 		connection.close();
+		brokerService.stopAllConnectors(new ServiceStopper());
+		brokerService.stop();
 	}
 
 }
