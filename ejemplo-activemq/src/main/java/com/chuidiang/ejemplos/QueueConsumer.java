@@ -23,6 +23,7 @@ public class QueueConsumer {
       Destination destination = session.createQueue(queue);
 
       consumer = session.createConsumer(destination);
+      session.createConsumer(destination);
    }
    
    public void start() throws JMSException {
