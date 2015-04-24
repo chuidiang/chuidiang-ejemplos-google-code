@@ -1,9 +1,13 @@
 package com.chuidiang.ejemplos;
 
 import javax.jms.Connection;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.broker.BrokerService;
 
 public class MainEmbeddedActiveMQ {
    private static final String QUEUE_NAME = "TEST.FOO";
@@ -11,29 +15,34 @@ public class MainEmbeddedActiveMQ {
    private static Connection connection;
 
    public static void main(String[] args) throws Exception {
-      BrokerService broker = new BrokerService();
-      broker.setPersistent(false);
-      broker.setBrokerName("brokerExample");
-      broker.start();
-      connectionFactory = new ActiveMQConnectionFactory("vm://brokerExample");
+      connectionFactory = new ActiveMQConnectionFactory(
+            "vm://localhost?broker.persistent=false");
       connection = connectionFactory.createConnection();
       connection.start();
 
       startMessageTransfer();
 
       connection.close();
-      broker.stop();
    }
 
    private static void startMessageTransfer() throws InterruptedException {
       Thread producerThread = new Thread() {
          public void run() {
             try {
-               QueueProducer queueProducer = new QueueProducer(connection,
+               Session session = connection.createSession(false,
+                     Session.AUTO_ACKNOWLEDGE);
+               MessageProducer producer = Util.createQueueProducer(session,
                      QUEUE_NAME);
-               queueProducer.start();
-               queueProducer.close();
-               connection.close();
+               
+               
+               for (int i = 0; i < 100; i++) {
+                  TextMessage message = session.createTextMessage("Hello " + i);
+                  producer.send(message);
+               }
+               
+               
+               producer.close();
+               session.close();
             } catch (Exception e) {
                e.printStackTrace();
             }
@@ -44,14 +53,30 @@ public class MainEmbeddedActiveMQ {
 
       Thread consumerThread[] = new Thread[10];
       for (int i = 0; i < 10; i++) {
-         consumerThread[i] = new Thread() {
+         consumerThread[i] = new Thread("Thread " + i) {
             public void run() {
                try {
-                  QueueConsumer queueConsumer = new QueueConsumer(connection,
+                  Session session = connection.createSession(false,
+                        Session.AUTO_ACKNOWLEDGE);
+                  MessageConsumer consumer = Util.createQueueConsumer(session,
                         QUEUE_NAME);
-                  queueConsumer.start();
-                  queueConsumer.close();
-                  connection.close();
+                  
+                  
+                  while (true) {
+                     Message message = consumer.receive(1000);
+                     if (message instanceof TextMessage) {
+                        System.out.println(Thread.currentThread().getName()
+                              + " received "
+                              + ((TextMessage) message).getText());
+                     }
+                     if (null == message) {
+                        consumer.close();
+                        session.close();
+                        return;
+                     }
+                  }
+                  
+                  
                } catch (Exception e) {
                   e.printStackTrace();
                }
