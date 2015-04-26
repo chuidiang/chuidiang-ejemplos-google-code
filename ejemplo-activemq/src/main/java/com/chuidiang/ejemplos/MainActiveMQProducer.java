@@ -1,5 +1,7 @@
 package com.chuidiang.ejemplos;
 
+import java.text.MessageFormat;
+
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,12 +13,17 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
-import org.apache.activemq.network.NetworkConnector;
 import org.apache.activemq.util.ServiceStopper;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+/**
+ * This class raise an ActiveMQ broker which works in cluster with the ActiveMQ broker 
+ * raised by de MainActiveMQConsumer.
+ * 
+ * @author Chuidiang
+ */
 public class MainActiveMQProducer {
 
    private static BrokerService brokerService;
@@ -24,6 +31,11 @@ public class MainActiveMQProducer {
    private static Session session;
    private static MessageProducer pingProducer;
    private static MessageConsumer pongConsumer;
+   private static final String HOST1 = "localhost";
+   private static final String PORT_HOST1 = "61617";
+   private static final String HOST2 = "localhost";
+   private static final String PORT_HOST2 = "61616";
+
 
    public static void main(String[] args) throws Exception {
       configureLogger();
@@ -33,6 +45,8 @@ public class MainActiveMQProducer {
       pingProducer = Util.createQueueProducer(session, "PING");
       pongConsumer = Util.createQueueConsumer(session, "PONG");
 
+      // When a message is received from pong queue, a message is sent
+      // to the ping queue
       pongConsumer.setMessageListener(new MessageListener() {
          public void onMessage(Message message) {
             if (message instanceof TextMessage) {
@@ -51,8 +65,10 @@ public class MainActiveMQProducer {
          }
       });
 
+      // Start the ping pong sending the first message.
       Util.sendText(session, pingProducer, "1");
 
+      // It waits for a keyboard Intro to exit program.
       System.in.read();
       closeAll();
    }
@@ -69,7 +85,7 @@ public class MainActiveMQProducer {
 
    private static void createActiveMQSession() throws JMSException {
       ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-            "tcp://localhost:61617");
+            MessageFormat.format("tcp://{0}:{1}", HOST1, PORT_HOST1));
 
       connection = connectionFactory.createConnection();
       connection.start();
@@ -80,8 +96,8 @@ public class MainActiveMQProducer {
    private static void createAndStartActiveMQBroker() throws Exception {
       brokerService = new BrokerService();
       brokerService.setBrokerName("producer");
-      brokerService.addConnector("tcp://localhost:61617");
-      brokerService.addNetworkConnector("static://tcp://localhost:61616");
+      brokerService.addConnector(MessageFormat.format("tcp://{0}:{1}", HOST1, PORT_HOST1));
+      brokerService.addNetworkConnector(MessageFormat.format("static://tcp://{0}:{1}",HOST2, PORT_HOST2));
       brokerService.setPersistent(false);
       brokerService.start();
    }
