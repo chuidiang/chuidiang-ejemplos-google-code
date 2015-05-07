@@ -37,6 +37,7 @@ public class MainEmbeddedActiveMQ {
                
                for (int i = 0; i < 100; i++) {
                   TextMessage message = session.createTextMessage("Hello " + i);
+                  message.setIntProperty("id", (int)(Math.random()*100));
                   producer.send(message);
                }
                
@@ -64,7 +65,9 @@ public class MainEmbeddedActiveMQ {
                   
                   while (true) {
                      Message message = consumer.receive(1000);
+                     
                      if (message instanceof TextMessage) {
+                        System.out.println(message.getIntProperty("id"));
                         System.out.println(Thread.currentThread().getName()
                               + " received "
                               + ((TextMessage) message).getText());
