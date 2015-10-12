@@ -8,13 +8,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.transform.Source;
 
+import org.tempuri.po.ObjectFactory;
 import org.tempuri.po.PurchaseOrderType;
 import org.tempuri.po.USAddress;
 
@@ -27,6 +26,34 @@ public class App {
       java2xml();
       xml2java();
 
+      java2XmlWithRoot();
+      xml2javaWithRoot();
+   }
+
+   private static void xml2javaWithRoot() throws JAXBException {
+      String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+            + "<La_Clase>"
+            + "<El_Atributo>ey you</El_Atributo>"
+            + "</La_Clase>";
+      
+      JAXBContext jc = JAXBContext.newInstance(UnaClase.class);
+      Unmarshaller ums = jc.createUnmarshaller();
+      
+      UnaClase theObject = (UnaClase) (ums.unmarshal(new StringReader(xml)));
+      
+      System.out.println(theObject.getUnAtributo());
+   }
+
+   private static void java2XmlWithRoot() throws JAXBException {
+      JAXBContext jc = JAXBContext.newInstance(UnaClase.class);
+      Marshaller ms = jc.createMarshaller();
+
+      ms.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+      UnaClase anObject = new UnaClase();
+      anObject.setUnAtributo("ey you");
+
+      ms.marshal(anObject, System.out);
    }
 
    private static void xml2java() throws JAXBException, XMLStreamException,
@@ -40,12 +67,13 @@ public class App {
 
       JAXBContext jc = JAXBContext.newInstance(PurchaseOrderType.class);
       Unmarshaller unmarshaller = jc.createUnmarshaller();
-      
+
       XMLStreamReader reader = XMLInputFactory.newFactory()
             .createXMLStreamReader(new StringReader(xml));
+
       JAXBElement<PurchaseOrderType> root = unmarshaller.unmarshal(reader,
             PurchaseOrderType.class);
-      
+
       System.out.println("City = " + root.getValue().getShipTo().getCity());
       System.out.println("Comment = " + root.getValue().getComment());
    }
@@ -61,9 +89,15 @@ public class App {
       Marshaller marshaller = context.createMarshaller();
       marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-      QName qName = new QName("info.source4code.jaxb.model", "purchaseOrder");
-      JAXBElement<PurchaseOrderType> root = new JAXBElement<PurchaseOrderType>(
-            qName, PurchaseOrderType.class, purchase);
+      // QName qName = new QName("info.source4code.jaxb.model",
+      // "purchaseOrder");
+      // JAXBElement<PurchaseOrderType> root = new
+      // JAXBElement<PurchaseOrderType>(
+      // qName, PurchaseOrderType.class, purchase);
+
+      ObjectFactory factory = new ObjectFactory();
+      JAXBElement<PurchaseOrderType> root = factory
+            .createPurchaseOrder(purchase);
 
       marshaller.marshal(root, System.out);
    }
