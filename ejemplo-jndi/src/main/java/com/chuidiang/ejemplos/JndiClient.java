@@ -15,11 +15,11 @@ public class JndiClient {
             "org.jnp.interfaces.NamingContextFactory");
       env.put("java.naming.provider.url", "jnp://192.168.1.2:5400");
 
-      final Context _context = new InitialContext(env);
+      Context context = new InitialContext(env);
 
       System.out.println("Application name = "
-            + _context.lookup("java:/config/applicationName"));
-      System.out.println("someData = " + _context.lookup("java:/config/clase"));
+            + context.lookup("java:/config/applicationName"));
+      System.out.println("someData = " + context.lookup("java:/config/clase"));
 
    }
 
