@@ -22,7 +22,7 @@ public class JndiServer {
 
    private static void storeSomeData() throws NamingException {
       Hashtable<String, String> env = new Hashtable<String, String>();
-      env.put("java.naming.factory.initial","org.jnp.interfaces.NamingContextFactory");
+      env.put(Context.INITIAL_CONTEXT_FACTORY,"org.jnp.interfaces.NamingContextFactory");
       env.put(Context.PROVIDER_URL,            "jnp://192.168.1.2:5400");
       Context context = new InitialContext(env);
       context.createSubcontext("config");

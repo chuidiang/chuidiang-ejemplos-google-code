@@ -11,9 +11,9 @@ public class JndiClient {
    public static void main(String[] args) throws NamingException {
       final Hashtable<String, String> env = new Hashtable<String, String>();
 
-      env.put("java.naming.factory.initial",
+      env.put(Context.INITIAL_CONTEXT_FACTORY,
             "org.jnp.interfaces.NamingContextFactory");
-      env.put("java.naming.provider.url", "jnp://192.168.1.2:5400");
+      env.put(Context.PROVIDER_URL, "jnp://192.168.1.2:5400");
 
       Context context = new InitialContext(env);
 
