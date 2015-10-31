@@ -25,8 +25,6 @@ public class JpaTest {
 	public static void main(String[] args) throws Exception {
 	   withHibernate();
 		withEclipseLynK();
-		DriverManager.getConnection(
-		      "jdbc:derby:;shutdown=true");
 	}
    private static void withHibernate() {
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("hibernatePersistenceUnit");
