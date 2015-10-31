@@ -55,7 +55,7 @@
 			<property name="javax.persistence.jdbc.password" value="ejemplo-jpa" /> 
 			-->
 			
-			<!-- Hibernate should create de database schema automatically -->
+			<!-- Hibernate should create the database schema automatically -->
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 		</properties>
 
