@@ -12,7 +12,6 @@
 		<!-- <exclude-unlisted-classes>false</exclude-unlisted-classes> -->
 		
 		<class>com.chuidiang.ejemplos.domain.Employee</class>
-		<class>com.chuidiang.ejemplos.domain.Department</class>
 		
 		<properties>
 
@@ -25,10 +24,7 @@
 			
 			<!-- EclipseLink should create the database schema automatically -->
 			<property name="eclipselink.ddl-generation" value="create-tables" />
-			<property name="eclipselink.ddl-generation.output-mode"
-				value="database" />
-			<property name="eclipselink.logging.level" value="SEVERE" />
-			
+			<property name="eclipselink.logging.level" value="WARNING"/>
 		</properties>
 
 	</persistence-unit>
@@ -44,7 +40,6 @@
 		<!-- <exclude-unlisted-classes>false</exclude-unlisted-classes> -->
 		
 		<class>com.chuidiang.ejemplos.domain.Employee</class>
-		<class>com.chuidiang.ejemplos.domain.Department</class>
 		
 		<properties>
 
