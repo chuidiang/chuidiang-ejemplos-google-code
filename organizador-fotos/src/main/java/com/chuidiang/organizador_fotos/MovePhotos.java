@@ -10,22 +10,17 @@ import java.util.Date;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
-import com.drew.imaging.FileTypeDetector;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
-import com.drew.metadata.Tag;
-import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.drew.metadata.file.FileMetadataDescriptor;
 import com.drew.metadata.file.FileMetadataDirectory;
-import com.drew.metadata.file.FileMetadataReader;
 
 public class MovePhotos {
    static String targetDir = "D:/JAVIER/Google Drive/FOTOS_FECHA";
 
    public static void main(String[] args) {
-      String sourceDir = "D:/JAVIER/Google Drive/FOTOS/2009";
+      String sourceDir = "D:/JAVIER/Google Drive/FOTOS_FECHA/2172";
 //      "D:/JAVIER/Google Drive/FOTOS_FECHA/2/11/30";
       String[] extensions = { "jpg", "jpeg" };
 
@@ -60,38 +55,23 @@ public class MovePhotos {
       }
    }
 
-   private void printMetadata(File source) throws ImageProcessingException,
-         IOException {
-      Metadata metadata = ImageMetadataReader.readMetadata(source);
-      for (Directory directory : metadata.getDirectories()) {
-         for (Tag tag : directory.getTags()) {
-            System.out.println(tag);
-         }
-      }
-   }
 
    private void printDate(File source) {
 
       Date date = null;
 
       try {
-         date = getPhotoDate(source);
+         date = ImageUtil.getPhotoDate(source);
       } catch (Exception e) {
-         // e.printStackTrace();
+         e.printStackTrace();
+         System.exit(-1);
       }
-
-//      if (null == date) {
-//         try {
-//            date = getFileDate(source);
-//         } catch (Exception e) {
-//            // e.printStackTrace();
-//         }
-//      }
 
       if (null != date) {
          copyPhoto(source, date);
       } else {
          System.err.println("No date for " + source);
+         System.exit(-1);
       }
    }
 
@@ -116,27 +96,6 @@ public class MovePhotos {
       return null;
    }
 
-   private Date getPhotoDate(File source) throws ImageProcessingException,
-         IOException {
-      Metadata metadata = ImageMetadataReader.readMetadata(source);
-      Collection<ExifSubIFDDirectory> directories = metadata
-            .getDirectoriesOfType(ExifSubIFDDirectory.class);
-      
-      Date date;
-      if (null != directories) {
-         for (Directory directory : directories) {
-            date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
-            if (null != date) {
-               if (date.getTime() < 10L*365L*24L*60L*60L*1000L) {
-                  date = null;
-                  continue;
-               }
-               return date;
-            }
-         }
-      }
-      return null;
-   }
 
    private void copyPhoto(File source, Date date) {
       Calendar calendar = Calendar.getInstance();
@@ -152,11 +111,21 @@ public class MovePhotos {
          day = "0"+day;
       }
 
+      if (calendar.get(Calendar.YEAR) > Calendar.getInstance().get(Calendar.YEAR)){
+         System.err.println(source + " is after now");
+         System.exit(-1);
+      }
+      if (calendar.get(Calendar.YEAR) < 1996){
+         System.err.println(source + " is before 1996");
+         System.exit(-1);
+      }
+      
+      
+      
       File path = new File(targetDir + "/" + year + "/" + month + "/" + day
             + "/");
 
       if (source.getParentFile().equals(path)) {
-         System.out.println("skipping " + source);
          return;
       }
 
@@ -168,6 +137,7 @@ public class MovePhotos {
                + e.getMessage());
          System.err.println(source.getParentFile());
          System.err.println(path);
+         System.exit(-1);
       }
 
    }
