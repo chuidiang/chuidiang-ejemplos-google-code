@@ -1,15 +1,8 @@
 package com.chuidiang.ejemplos.hibernate_annotations;
 
-import java.util.Date;
+import jakarta.persistence.*;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.Date;
 
 /**
  * Clase persistente en base de datos con annotations.

@@ -1,12 +1,9 @@
 package com.chuidiang.ejemplos.hibernate_annotations;
 
+import org.hibernate.Session;
+
 import java.util.Date;
 import java.util.List;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
 /**
  * Ejemplo sencillo de hibernate usando annotations.<br>
@@ -20,8 +17,6 @@ import org.hibernate.Session;
 public class Ejemplo1 {
 
     public static void main(String[] args) {
-        BasicConfigurator.configure();
-        Logger.getRootLogger().setLevel(Level.INFO);
         new Ejemplo1();
     }
 
