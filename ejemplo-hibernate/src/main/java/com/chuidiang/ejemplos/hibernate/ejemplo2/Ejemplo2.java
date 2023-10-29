@@ -1,17 +1,13 @@
 package com.chuidiang.ejemplos.hibernate.ejemplo2;
 
+import com.chuidiang.ejemplos.hibernate.ejemplo1.Event;
+import org.hibernate.Session;
+
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
-
-import com.chuidiang.ejemplos.hibernate.ejemplo1.Event;
-
 /**
- * Ejemplo sencillo de Hibernate con una asociación entre dos tablas.<br>
+ * Ejemplo sencillo de Hibernate con una asociaciï¿½n entre dos tablas.<br>
  * La clase Person puede tener asociados varios Event. Se inserta una Person en
  * base de datos, luego un Event, se asocian y luego se hace una consulta para
  * mostrar los resultados
@@ -22,8 +18,6 @@ import com.chuidiang.ejemplos.hibernate.ejemplo1.Event;
 public class Ejemplo2 {
 
     public static void main(String[] args) {
-        BasicConfigurator.configure();
-        Logger.getRootLogger().setLevel(Level.WARN);
         new Ejemplo2();
         HibernateUtil.getSessionFactory().close();
     }
@@ -33,12 +27,12 @@ public class Ejemplo2 {
         Long idEvent = createAndStoreEvent("El Event", new Date());
 
         // Se crea y guarda en bd una persona
-        Long idPerson = createAndStorePerson("Juan", "Cortés", 34);
+        Long idPerson = createAndStorePerson("Juan", "CortÃ©s", 34);
 
         // Se asocian en bd persona y evento
         addPersonToEvent(idPerson, idEvent);
 
-        // Se añade un nuevo evento a la persona
+        // Se aï¿½ade un nuevo evento a la persona
         addNewEventToPerson("Nuevo evento", new Date(), idPerson);
 
         // Se listan las personas con sus eventos
@@ -61,7 +55,7 @@ public class Ejemplo2 {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
 
-        // Creación de la persona.
+        // Creaciï¿½n de la persona.
         Person p = new Person();
         p.setAge(edad);
         p.setFirstname(nombre);
@@ -98,7 +92,7 @@ public class Ejemplo2 {
         Person aPerson = (Person) session.load(Person.class, personId);
         Event anEvent = (Event) session.load(Event.class, eventId);
 
-        // Se añade el evento a la persona
+        // Se aï¿½ade el evento a la persona
         aPerson.getEvents().add(anEvent);
 
         // Se termina la transaccion
@@ -120,7 +114,7 @@ public class Ejemplo2 {
         e.setDate(eventDate);
         session.save(e);
 
-        // Se añade el evento a la persona y se salva
+        // Se aï¿½ade el evento a la persona y se salva
         aPerson.getEvents().add(e);
         session.save(aPerson);
 

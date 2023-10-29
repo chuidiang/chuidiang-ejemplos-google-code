@@ -1,12 +1,11 @@
 package com.chuidiang.ejemplos.hibernate.ejemplo1;
 
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Date;
 import java.util.List;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
 
 /**
  * Ejemplo sencillo con Hibernate.<br>
@@ -17,11 +16,9 @@ import org.hibernate.Session;
  * 
  */
 public class Ejemplo1 {
-    private final static Logger log = Logger.getLogger(Ejemplo1.class);
+    private final static Logger log = LoggerFactory.getLogger(Ejemplo1.class);
 
     public static void main(String[] args) {
-        BasicConfigurator.configure();
-        Logger.getLogger("org.hibernate").setLevel(Level.WARN);
         new Ejemplo1();
     }
 

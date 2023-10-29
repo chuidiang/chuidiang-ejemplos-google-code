@@ -1,14 +1,11 @@
 package com.chuidiang.ejemplos.hibernate.ejemplo3;
 
-import java.util.List;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import java.util.List;
+
 /**
- * Ejemplo sencillo de Hibernate con una asociación entre una entidad y una
+ * Ejemplo sencillo de Hibernate con una asociaciï¿½n entre una entidad y una
  * tabla de valores primitivos.<br>
  * La clase Person puede tener asociados varios String e-mail. Se inserta una
  * Person en base de datos, luego se le asocia un e-mail y luego se hace una
@@ -20,15 +17,13 @@ import org.hibernate.Session;
 public class Ejemplo3 {
 
     public static void main(String[] args) {
-        BasicConfigurator.configure();
-        Logger.getRootLogger().setLevel(Level.WARN);
         new Ejemplo3();
         HibernateUtil.getSessionFactory().close();
     }
 
     public Ejemplo3() {
         // Se crea y guarda en bd una persona
-        Long idPerson = createAndStorePerson("Juan", "Cortés", 34);
+        Long idPerson = createAndStorePerson("Juan", "CortÃ©s", 34);
 
         // Se le asocia el e-mail.
         addEmailToPerson(idPerson, "direccion@correo.com");
@@ -45,7 +40,7 @@ public class Ejemplo3 {
      */
     private void addEmailToPerson(Long personId, String emailAddress) {
 
-        // Comienza la sesión
+        // Comienza la sesiï¿½n
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
 
@@ -72,7 +67,7 @@ public class Ejemplo3 {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
 
-        // Creación de la persona.
+        // Creaciï¿½n de la persona.
         Person p = new Person();
         p.setAge(edad);
         p.setFirstname(nombre);
