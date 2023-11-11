@@ -1,12 +1,11 @@
 package com.chuidiang.ejemplos.junit45;
 
-import static org.junit.Assert.assertEquals;
-
+import com.chuidiang.ejemplos.Resta;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.chuidiang.ejemplos.Resta;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Una clase de tests con junit 4.5 El metodo que queramos que se ejecute antes

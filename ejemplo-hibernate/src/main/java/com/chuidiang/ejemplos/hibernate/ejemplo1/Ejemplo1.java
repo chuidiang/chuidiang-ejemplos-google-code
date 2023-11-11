@@ -1,8 +1,6 @@
 package com.chuidiang.ejemplos.hibernate.ejemplo1;
 
 import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
  * 
  */
 public class Ejemplo1 {
-    private final static Logger log = LoggerFactory.getLogger(Ejemplo1.class);
 
     public static void main(String[] args) {
         new Ejemplo1();
@@ -44,7 +41,7 @@ public class Ejemplo1 {
         // Insercion en base de datos.
         session.save(theEvent);
         session.getTransaction().commit();
-        log.info("Insertado: " + theEvent);
+        System.out.println("Insertado: " + theEvent);
         return theEvent.getId();
     }
 
@@ -57,7 +54,7 @@ public class Ejemplo1 {
         List<Event> result = (List<Event>) session.createQuery("from Event")
                 .list();
         for (Event evento : result) {
-            log.info("Leido: " + evento);
+            System.out.println("Leido: " + evento);
         }
 
         // Cierre de sesion.

@@ -2,14 +2,14 @@ package com.chuidiang.ejemplos.semi_mazacote;
 
 /**
  * Clase encargada de hacer las sumas. Recibe una interface de la que leer
- * líneas de texto con los números que debe sumar, hace la suma, y muestra el
- * resultado a través de otra interface.
+ * lÃ­neas de texto con los nÃºmeros que debe sumar, hace la suma, y muestra el
+ * resultado a travÃ©s de otra interface.
  * 
  * @author Chuidiang
  * 
  */
 public class Sumador {
-    /** Sitio del que leer las líneas de entrada */
+    /** Sitio del que leer las lï¿½neas de entrada */
     private IfzScanner scanner;
 
     /** Sitio por el que mostrar los resultados */
@@ -28,10 +28,10 @@ public class Sumador {
 
     /**
      * Lectura de una linea de IfzScanner e intento de convertira a double,
-     * repitiendo hasta que la operación tiene éxito.
+     * repitiendo hasta que la operaciï¿½n tiene ï¿½xito.
      * 
      * @param textoPeticion
-     * @return El double leído
+     * @return El double leÃ­do
      */
     private double getSumando(String textoPeticion) {
         boolean correcto;
@@ -54,7 +54,7 @@ public class Sumador {
         this.muestraResultados = muestraResultados;
     }
 
-    /** Se le pasa de dónde leer las entradas */
+    /** Se le pasa de dÃ³nde leer las entradas */
     public void setIfzScanner(IfzScanner scanner) {
         this.scanner = scanner;
     }

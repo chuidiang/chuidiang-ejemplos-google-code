@@ -2,7 +2,6 @@ package com.chuidiang.ejemplos.junit45;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Ejemplo de TestSuite en junit 4.5
@@ -20,7 +19,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * 
  */
 @RunWith(Suite.class)
-@SuiteClasses( { TestResta.class, TestSuma.class })
+@Suite.SuiteClasses( { TestResta.class, TestSuma.class })
 public class AllTest {
 
 }

@@ -1,11 +1,10 @@
 package com.chuidiang.ejemplos.poco_mazacote;
 
-import static org.junit.Assert.assertEquals;
-
+import com.chuidiang.ejemplos.semi_mazacote.Sumador;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.chuidiang.ejemplos.semi_mazacote.Sumador;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test de prueba de la clase Sumador
@@ -18,10 +17,10 @@ public class TestSumador {
     /** Clase a probar */
     private Sumador sumador;
 
-    /** scanner específico para el test */
+    /** scanner especÃ­fico para el test */
     private MockScanner scanner;
 
-    /** MuestraResultados específico para el test */
+    /** MuestraResultados especÃ­fico para el test */
     private MockMuestraResultados muestraResultados;
 
     /**

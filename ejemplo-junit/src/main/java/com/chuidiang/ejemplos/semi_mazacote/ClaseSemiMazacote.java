@@ -3,12 +3,13 @@ package com.chuidiang.ejemplos.semi_mazacote;
 import java.util.Scanner;
 
 /**
- * Main de ejemplo de una clase menos mazacote, más fácil de testear. En vez de
+ * Main de ejemplo de una clase menos mazacote, mï¿½s fï¿½cil de testear. En vez de
  * leer directamnte de teclado y escribir de pantalla, lee de una interface y
  * escribe en una interface
  * 
  * @author Chuidiang
  */
+
 public class ClaseSemiMazacote {
 
     /**

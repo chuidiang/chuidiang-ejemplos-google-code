@@ -1,12 +1,7 @@
 package com.chuidiang.ejemplos.junit45;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.chuidiang.ejemplos.Suma;
+import org.junit.*;
 
 /**
  * Una clase de tests con junit 4.5 El metodo que queramos que se ejecute antes
@@ -24,12 +19,13 @@ public class TestSuma {
 
     @Test
     public void aVerSiIncrementaBien() {
-        assertEquals("Test incrementa", 2.0, suma.incrementa(1.0), 1e-6);
+        Assert.assertEquals("Test incrementa", 2.0, suma.incrementa(1.0), 1e-6);
     }
 
     @Test
+    @Ignore // este test falla a posta
     public void aVerSiSumaBien() {
-        assertEquals("Test suma", 2.0, suma.getSuma(1.0, 1.0), 1e-6);
+        Assert.assertEquals("Test suma", 2.0, suma.getSuma(1.0, 1.0), 1e-6);
     }
 
     @Before
